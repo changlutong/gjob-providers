@@ -1,6 +1,6 @@
 package com.jk.mapper;
 
-import com.jk.user.User;
+import com.jk.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

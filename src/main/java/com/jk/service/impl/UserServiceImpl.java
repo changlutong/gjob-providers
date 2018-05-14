@@ -18,7 +18,7 @@ package com.jk.service.impl;
 
 import com.jk.mapper.IUserMapper;
 import com.jk.service.IUserService;
-import com.jk.user.User;
+import com.jk.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

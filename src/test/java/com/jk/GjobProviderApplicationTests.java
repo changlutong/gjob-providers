@@ -1,7 +1,7 @@
 package com.jk;
 
 import com.jk.service.IUserService;
-import com.jk.user.User;
+import com.jk.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

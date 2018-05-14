@@ -1,6 +1,6 @@
 package com.jk.service;
 
-import com.jk.user.User;
+import com.jk.model.User;
 
 import java.util.List;
 
