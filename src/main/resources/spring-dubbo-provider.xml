@@ -29,6 +29,7 @@
    <!-- dubbo端口号 -->  
    <dubbo:protocol name="dubbo" port="20881" ></dubbo:protocol>
    <dubbo:service interface="com.jk.service.IUserService" ref="userService"></dubbo:service>
+	<dubbo:service interface="com.jk.service.ITreeService" ref="treeService"></dubbo:service>
+	<dubbo:service interface="com.jk.service.RoleService" ref="roleService"></dubbo:service>
 
-   
  </beans>	
