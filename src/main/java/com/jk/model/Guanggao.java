@@ -24,31 +24,41 @@ public class Guanggao implements Serializable {
     private static final long serialVersionUID = 2352568169325737626L;
 
 
-    private String gid;//广告ID
+    private String id;//广告ID
     private String imageurl;//图片路径
     private String pid;//展示位置
     private String info;//简介
     private String companyid;//公司ID
     private String status;//状态
+    private String biaoid;//表ID
 
     @Override
     public String toString() {
         return "Guanggao{" +
-                "gid='" + gid + '\'' +
+                "id='" + id + '\'' +
                 ", imageurl='" + imageurl + '\'' +
                 ", pid='" + pid + '\'' +
                 ", info='" + info + '\'' +
                 ", companyid='" + companyid + '\'' +
                 ", status='" + status + '\'' +
+                ", biaoid='" + biaoid + '\'' +
                 '}';
     }
 
-    public String getGid() {
-        return gid;
+    public String getBiaoid() {
+        return biaoid;
     }
 
-    public void setGid(String gid) {
-        this.gid = gid;
+    public void setBiaoid(String biaoid) {
+        this.biaoid = biaoid;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getImageurl() {
