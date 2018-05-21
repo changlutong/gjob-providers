@@ -12,6 +12,7 @@ package com.jk.service.impl;
 
 import com.jk.mapper.IBankTypeMapper;
 import com.jk.model.BankType;
+import com.jk.model.Tree;
 import com.jk.service.BankTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,15 @@ public class BankTypeServiceImpl implements BankTypeService {
     @Override
     public void addBankTypeList(int i) {
         bankTypeMapper.deleteBankType(i);
+    }
+
+    /**
+     * 属性菜单查询
+     * @return
+     */
+    @Override
+    public List<Tree> queryTreeList() {
+        return bankTypeMapper.queryTreeList();
     }
 
 }

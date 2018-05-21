@@ -31,7 +31,7 @@ public interface IGuanggaoMapper {
     long selectCount();
     @Select("select * from t_guanggao limit #{start},#{rows}")
     List<Guanggao> userList(@Param("start") int start,@Param("rows") Integer rows);
-    @Insert("insert into t_guanggao values(#{guanggao.id},#{guanggao.imageurl},#{guanggao.pid},#{guanggao.info},#{guanggao.companyid},#{guanggao.status})")
+    @Insert("insert into t_guanggao values(#{guanggao.id},#{guanggao.imageurl},#{guanggao.pid},#{guanggao.info},#{guanggao.companyid},#{guanggao.status},#{guanggao.price})")
     void saveguanggao(@Param("guanggao") Guanggao guanggao);
     @Update("updata from t_guanggao set status ='2' where gid = #{ggid}")
     void updatestatus(@Param("ggid") String ggid);
