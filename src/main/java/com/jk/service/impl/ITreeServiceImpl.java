@@ -28,13 +28,13 @@ public class ITreeServiceImpl implements ITreeService{
         // 查询出一级菜单
         List<Tree> firstMenu = treeMapper.menuList(0,rid);
         // 查询一级菜单的子菜单
-        recursionMenu(firstMenu,rid);
-        return firstMenu;
+        List<Tree> firstMenu01= recursionMenu(firstMenu,rid);
+        return firstMenu01;
     }
     /**
      * 递归加载子菜单
      */
-    public void recursionMenu(List<Tree> firstMenu,Integer   rid) {
+    public List<Tree> recursionMenu(List<Tree> firstMenu,Integer   rid) {
         //通过循环去除父节点的id，
         for (Tree menu : firstMenu) {
 
@@ -49,7 +49,7 @@ public class ITreeServiceImpl implements ITreeService{
             }
 
         }
-
+        return firstMenu;
     }
 
     @Override
