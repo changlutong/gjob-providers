@@ -11,6 +11,7 @@
 package com.jk.mapper;
 
 import com.jk.model.BankType;
+import com.jk.model.Tree;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -39,4 +40,7 @@ public interface IBankTypeMapper {
 
     @Delete("delete from t_banktype where id = #{i}")
     void deleteBankType(@Param("i")int i);
+
+    @Select("select * from t_tree")
+    List<Tree> queryTreeList();
 }
