@@ -10,13 +10,14 @@
  */
 package com.jk.service.impl;
 
-import com.alibaba.dubbo.common.json.JSONObject;
 import com.jk.mapper.IGuanggaoMapper;
+import com.jk.model.Company;
 import com.jk.model.Guanggao;
 import com.jk.service.IGuanggaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +29,7 @@ import java.util.UUID;
  * @create 2018/5/14
  * @since 1.0.0
  */
-@Service("guanggaoservice")
+@Service("guanggaoService")
 public class GuanggaoServiceImpl implements IGuanggaoService {
 
     @Autowired
@@ -37,25 +38,25 @@ public class GuanggaoServiceImpl implements IGuanggaoService {
 
 
     @Override
-    public JSONObject selectGuanggao(Integer page, Integer rows) {
+    public List<Guanggao> selectGuanggao(Integer page, Integer rows) {
         //分页查询
         //查询总条数
-        long total = guanggaoMapper.selectCount();
+       // long total = guanggaoMapper.selectCount();
         //计算开始位置和结束位置
         int start = (page-1)*rows;
-        List list=guanggaoMapper.userList(start,rows);
+        List<Guanggao> list=guanggaoMapper.userList(start,rows);
 
-        JSONObject json =new JSONObject();
+        /*JSONObject json =new JSONObject();
         json.put("total", total);
-        json.put("rows", list);
+        json.put("rows", list);*/
 
-        return json;
+        return list;
     }
 
     @Override
     public void saveguanggao(Guanggao guanggao) {
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
-        guanggao.setGid(uuid);
+        guanggao.setId(uuid);
         guanggao.setStatus("1");//1是未审核  2是已审核
         guanggaoMapper.saveguanggao(guanggao);
 
@@ -69,5 +70,25 @@ public class GuanggaoServiceImpl implements IGuanggaoService {
     @Override
     public void deleteguanggao(String gid) {
         guanggaoMapper.deleteguanggao(gid);
+    }
+
+    @Override
+    public long querycount() {
+        return guanggaoMapper.selectCount();
+    }
+
+    @Override
+    public List<Company> querycompany() {
+        String [] arr ={"t_company","t_company13","t_company15","t_company17"};
+        List<Company> list = new ArrayList();
+
+        for (String biaoid: arr) {
+
+            List<Company> list1 = guanggaoMapper.querycompany(biaoid);
+            for (Company company : list1) {
+                list.add(company);
+            }
+        }
+        return list;
     }
 }

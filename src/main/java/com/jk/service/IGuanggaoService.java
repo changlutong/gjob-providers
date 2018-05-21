@@ -11,7 +11,11 @@
 package com.jk.service;
 
 import com.alibaba.dubbo.common.json.JSONObject;
+import com.jk.model.Company;
 import com.jk.model.Guanggao;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -26,7 +30,7 @@ public interface IGuanggaoService {
     /**
      * 广告分页查询    孙国锦
      */
-    JSONObject selectGuanggao(Integer page, Integer rows);
+    List<Guanggao> selectGuanggao(Integer page, Integer rows);
 
     /**
      * 新增广告    孙国锦
@@ -42,6 +46,17 @@ public interface IGuanggaoService {
      * 删除广告  孙国锦
      */
     void deleteguanggao(String gid);
+
+    /**
+     * 总条数查询
+     */
+    long querycount();
+
+    /**
+     * 查询所有公司
+     * @return
+     */
+    List<Company> querycompany();
 
 
 }

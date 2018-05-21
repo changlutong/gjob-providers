@@ -10,6 +10,7 @@
  */
 package com.jk.mapper;
 
+import com.jk.model.Company;
 import com.jk.model.Guanggao;
 import org.apache.ibatis.annotations.*;
 
@@ -29,11 +30,14 @@ public interface IGuanggaoMapper {
     @Select("select count(*) from t_guanggao")
     long selectCount();
     @Select("select * from t_guanggao limit #{start},#{rows}")
-    List userList(@Param("start") int start,@Param("rows") Integer rows);
-    @Insert("insert into t_guanggao values(#{guanggao.gid},#{guanggao.imageurl},#{guanggao.pid},#{guanggao.info},#{guanggao.companyid},#{guanggao.status})")
+    List<Guanggao> userList(@Param("start") int start,@Param("rows") Integer rows);
+    @Insert("insert into t_guanggao values(#{guanggao.id},#{guanggao.imageurl},#{guanggao.pid},#{guanggao.info},#{guanggao.companyid},#{guanggao.status},#{guanggao.price})")
     void saveguanggao(@Param("guanggao") Guanggao guanggao);
     @Update("updata from t_guanggao set status ='2' where gid = #{ggid}")
     void updatestatus(@Param("ggid") String ggid);
-    @Delete("delete from t_guanggao where gid = #{gid}")
+    @Delete("delete from t_guanggao where id = #{gid}")
     void deleteguanggao(@Param("gid") String gid);
+
+    @Select("select id,companyname from ${biaoid}")
+    List<Company> querycompany(@Param("biaoid") String biaoid);
 }
