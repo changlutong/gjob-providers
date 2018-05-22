@@ -220,4 +220,12 @@ public interface IUserdatumMapper {
      */
     @Select("select * from t_personal where phone = #{loginname} and password = #{password}")
     List<Tpersonal> selectUserlogin(@Param("loginname")String loginname, @Param("password")String password);
+
+    /**
+     *查询 当前用户收投递的 职业
+     *
+     */
+
+    @Select("select t2.workname,t2.workspace,t2.workinfo,t2.salary,t2.id from t_job_user t1,t_job t2 where t1.jobid = t2.id and t1.userid = #{userid}")
+    List<Map<String,Object>> selectalljobto(@Param("userid")String userid);
 }
