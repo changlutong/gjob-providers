@@ -14,7 +14,9 @@ public interface RoleService {
 
     PageUtil addcharolelist(PageUtil pageUtil) throws  Exception;
 
+
     List<Tree> addcharolemenulist(Integer roid);
+
     List<Tree> addchamenulist();
     void deleterolelist(Integer roid);
     void saverolemenulist(int mid, Integer roid);

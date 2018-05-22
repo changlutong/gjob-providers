@@ -26,7 +26,6 @@ public class RoleServiceImpl implements RoleService{
 
         return pageUtil;
     }
-
     @Override
     public List<Tree> addcharolemenulist(Integer roid) {
         // 查询出一级菜单
@@ -41,6 +40,7 @@ public class RoleServiceImpl implements RoleService{
         // 查询一级菜单的子菜单
         return firstMenu;
     }
+
 
     @Override
     public void deleterolelist(Integer roid) {

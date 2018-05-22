@@ -40,14 +40,23 @@ public class Company implements Serializable{
 
     private Integer category;
 
-    private Integer idcardpicture;
+    private String idcardpicture;
+    private String idcardpicturefan;
 
-    public Integer getIdcardpicture() {
+    public String getIdcardpicture() {
         return idcardpicture;
     }
 
-    public void setIdcardpicture(Integer idcardpicture) {
+    public void setIdcardpicture(String idcardpicture) {
         this.idcardpicture = idcardpicture;
+    }
+
+    public String getIdcardpicturefan() {
+        return idcardpicturefan;
+    }
+
+    public void setIdcardpicturefan(String idcardpicturefan) {
+        this.idcardpicturefan = idcardpicturefan;
     }
 
     public String getId() {
@@ -208,7 +217,8 @@ public class Company implements Serializable{
                 ", checkstatus=" + checkstatus +
                 ", companytablename='" + companytablename + '\'' +
                 ", category=" + category +
-                ", idcardpicture=" + idcardpicture +
+                ", idcardpicture='" + idcardpicture + '\'' +
+                ", idcardpicturefan='" + idcardpicturefan + '\'' +
                 '}';
     }
 }
