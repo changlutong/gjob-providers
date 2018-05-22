@@ -32,7 +32,8 @@ public interface ICompanycltMapper {
     List<Map<String,Object>> getzhiweilistfor2(String companyid);
     @SelectProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "selectJob")
     List<Map<String,Object>> selectjiobclt2(@Param("edu")String edu,@Param("wspa")String wspa);
-
+    @SelectProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "selectalljob")
+    List<Job> selectalljob(@Param("job") Job job);
 
 
     class JobDaoProvider {
@@ -106,6 +107,14 @@ public interface ICompanycltMapper {
                 sql+=" and t1.hkadr like '%"+wspa+"%'";
             }
             return sql;
+        }
+        public String selectalljob(@Param("job")Job job){
+
+            String sql ="select * from t_job";
+            if(job.getWorkname()!=null&&!"".equals(job.getWorkname())){
+                sql+=" where workname like '%"+job.getWorkname()+"%'";
+            }
+          return sql;
         }
     }
 }
