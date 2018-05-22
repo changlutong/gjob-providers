@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -143,7 +144,22 @@ public class CompanyServiceImpl implements ICompanyService {
             List<Company> list = companyDao.querycompanylogin(phone, password, companytablename);
             if (list != null && list.size() > 0) {
 
-                return "2";//2为成功
+               List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
+
+                String id = statuslist.get(0).getId();
+               if(statuslist.get(0).getCheckstatus()==1){
+
+
+                   return "3,"+id;
+
+               }else if(statuslist.get(0).getCheckstatus()==2){
+
+                   return "2,"+id;
+
+
+               }
+              return "4";
+
             }
         } else if ("15".equals(cphone)) {
             company.setCompanytablename("t_company15");
@@ -151,15 +167,42 @@ public class CompanyServiceImpl implements ICompanyService {
             List<Company> list = companyDao.querycompanylogin(phone, password, companytablename);
             if (list != null && list.size() > 0) {
 
-                return "2";//2为成功
+                List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
+
+                String id = statuslist.get(0).getId();
+                if(statuslist.get(0).getCheckstatus()==1){
+
+
+                    return "3,"+id;
+
+                }else if(statuslist.get(0).getCheckstatus()==2){
+
+                    return "2,"+id;
+
+
+                }
+                return "4";
             }
         } else if ("17".equals(cphone)) {
             company.setCompanytablename("t_company17");
             String companytablename = company.getCompanytablename();
             List<Company> list = companyDao.querycompanylogin(phone, password, companytablename);
             if (list != null && list.size() > 0) {
+                List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
 
-                return "2";//2为成功
+                String id = statuslist.get(0).getId();
+                if(statuslist.get(0).getCheckstatus()==1){
+
+
+                    return "3,"+id;
+
+                }else if(statuslist.get(0).getCheckstatus()==2){
+
+                    return "2,"+id;
+
+
+                }
+                return "4";
             }
         } else {
             company.setCompanytablename("t_company");
@@ -167,7 +210,21 @@ public class CompanyServiceImpl implements ICompanyService {
             List<Company> list = companyDao.querycompanylogin(phone, password, companytablename);
             if (list != null && list.size() > 0) {
 
-                return "2"; //2为成功
+                List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
+
+                String id = statuslist.get(0).getId();
+                if(statuslist.get(0).getCheckstatus()==1){
+
+
+                    return "3,"+id;
+
+                }else if(statuslist.get(0).getCheckstatus()==2){
+
+                    return "2,"+id;
+
+
+                }
+                return "4";
             }
         }
         return "1";//1为账号密码错
