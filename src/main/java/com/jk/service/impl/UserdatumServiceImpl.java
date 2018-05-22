@@ -154,6 +154,12 @@ public class UserdatumServiceImpl implements IUserdatumService {
     }
 
     @Override
+    public List<Map<String, Object>> selectalljobto(String userid) {
+        List<Map<String, Object>> list = iuserdatumMapper.selectalljobto(userid);
+        return list;
+    }
+
+    @Override
     public List<Tpersonal> selectUserlogin(String loginname, String password) {
        List <Tpersonal> list = iuserdatumMapper.selectUserlogin(loginname,password);
         return list;
