@@ -109,4 +109,14 @@ public class CompanycltServiceImpl implements ICompanycltService{
 
         return list;
     }
+
+    @Override
+    public void toudijianli(String jobid, String userid) {
+
+
+        String uuid = UUID.randomUUID().toString().replaceAll("-","");
+
+        companycltMapper.toudijianli(jobid,userid,uuid);
+
+    }
 }
