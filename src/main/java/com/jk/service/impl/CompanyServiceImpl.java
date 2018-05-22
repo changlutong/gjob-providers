@@ -40,7 +40,11 @@ public class CompanyServiceImpl implements ICompanyService {
         String pp = cphone.substring(0, 2);
         String zhaopian = company.getTradinglicense();
         String[] arr = zhaopian.split(",");
-        company.setTradinglicense(arr[0]);
+
+
+            company.setTradinglicense(arr[0]);
+            company.setIdcardpicture(arr[1]);
+            company.setIdcardpicturefan(arr[2]);
 
 
 
