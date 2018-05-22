@@ -40,4 +40,19 @@ public interface IGuanggaoMapper {
 
     @Select("select id,companyname from ${biaoid}")
     List<Company> querycompany(@Param("biaoid") String biaoid);
+
+    @Select("select * from t_guanggao where pid =1 and status=2 order by price desc")
+    List<Guanggao> selectallguanggao();
+    @Select("select * from t_guanggao where pid =2 and status=2 order by price desc")
+    List<Guanggao> selecterhaoguanggao();
+    @Select("select * from t_guanggao where pid =3 and status=2 order by price desc")
+    List<Guanggao> selectsanhaoguanggao();
+
+    @Select("select * from t_guanggao where pid =4 and status=2 order by price desc")
+    List<Guanggao> selectsihaoguanggao();
+
+    @Select("select * from t_guanggao where pid =5 and status=2 order by price desc")
+    List<Guanggao> selectwuhaoguanggao();
+
+
 }
