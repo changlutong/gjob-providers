@@ -36,6 +36,5 @@
 	<dubbo:service interface="com.jk.service.BankTypeService" ref="bankTypeService"></dubbo:service>
 	<dubbo:service interface="com.jk.service.IActivityService" ref="activityService"></dubbo:service>
 	<dubbo:service interface="com.jk.service.ICompanyService" ref="companyService"></dubbo:service>
-	<dubbo:service interface="com.jk.service.IGuanggaoService" ref="guanggaoService"></dubbo:service>
 
  </beans>	

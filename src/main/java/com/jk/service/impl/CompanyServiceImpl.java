@@ -5,11 +5,15 @@ import com.jk.model.Company;
 
 import com.jk.service.ICompanyService;
 import com.jk.util.EmailUtil;
+import com.jk.util.HttpClient;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +23,28 @@ import java.util.List;
  * Created by yuankang on 2018/5/15.
  */
 @Service("companyService")
+@Component
 public class CompanyServiceImpl implements ICompanyService {
 
     @Autowired
     private ICompanyDao companyDao;
+
+    @Autowired
+    private AmqpTemplate rabbitTemplate;
+
 
     @Override
     public String tosavecompany(Company company) {
         String cphone = company.getId();
         String username = company.getUsername();
         String pp = cphone.substring(0, 2);
+        String zhaopian = company.getTradinglicense();
+        String[] arr = zhaopian.split(",");
+        company.setTradinglicense(arr[0]);
+
+
+
+
         if ("13".equals(pp)) {
             //选表
             company.setCompanytablename("t_company13");
@@ -45,6 +61,15 @@ public class CompanyServiceImpl implements ICompanyService {
                 return "4";//4为手机号已经存在
             }
             companyDao.tosavecompany(company);
+
+          /*  try {
+                String code = HttpClient.togetString(cphone);
+                rabbitTemplate.convertAndSend("messageskey",code);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+*/
             return "1";//1为注册成功
 
         } else if ("15".equals(pp)) {
