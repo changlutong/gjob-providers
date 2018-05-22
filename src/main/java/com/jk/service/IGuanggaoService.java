@@ -58,5 +58,13 @@ public interface IGuanggaoService {
      */
     List<Company> querycompany();
 
-
+    /**
+     * 查询全部广告
+     * @return
+     */
+    List<Guanggao> selectallguanggao();
+    List<Guanggao> selecterhaoguanggao();
+    List<Guanggao> selectsanhaoguanggao();
+    List<Guanggao> selectsihaoguanggao();
+    List<Guanggao> selectwuhaoguanggao();
 }

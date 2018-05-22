@@ -91,4 +91,36 @@ public class GuanggaoServiceImpl implements IGuanggaoService {
         }
         return list;
     }
+
+    @Override
+    public List<Guanggao> selectallguanggao() {
+
+        List<Guanggao> list =guanggaoMapper.selectallguanggao();
+        return  list;
+    }
+    @Override
+    public List<Guanggao> selecterhaoguanggao() {
+
+        List<Guanggao> list =guanggaoMapper.selecterhaoguanggao();
+        return  list;
+    }
+
+    @Override
+    public List<Guanggao> selectsanhaoguanggao() {
+
+        List<Guanggao> list =guanggaoMapper.selectsanhaoguanggao();
+        return  list;
+    }
+    @Override
+    public List<Guanggao> selectsihaoguanggao() {
+
+        List<Guanggao> list =guanggaoMapper.selectsihaoguanggao();
+        return  list;
+    }
+    @Override
+    public List<Guanggao> selectwuhaoguanggao() {
+
+        List<Guanggao> list =guanggaoMapper.selectwuhaoguanggao();
+        return  list;
+    }
 }

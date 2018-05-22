@@ -2,7 +2,8 @@ package com.jk.service;
 
 import com.jk.model.Tree;
 
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2018/05/14.
@@ -13,7 +14,7 @@ public interface ITreeService {
 
 
   /*  List<Tree> menulist();*/
-  List<Tree> menulist(Integer rid);
+  Set<Map<String,Object>> menulist(Integer id);
 
   void deletelist(Integer id);
 
@@ -26,6 +27,5 @@ public interface ITreeService {
 
 
   void updatelist(Tree menu);
-
 
 }

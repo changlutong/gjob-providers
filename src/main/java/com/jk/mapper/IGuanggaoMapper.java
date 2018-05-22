@@ -31,7 +31,7 @@ public interface IGuanggaoMapper {
     long selectCount();
     @Select("select * from t_guanggao limit #{start},#{rows}")
     List<Guanggao> userList(@Param("start") int start,@Param("rows") Integer rows);
-    @Insert("insert into t_guanggao values(#{guanggao.id},#{guanggao.imageurl},#{guanggao.pid},#{guanggao.info},#{guanggao.companyid},#{guanggao.status})")
+    @Insert("insert into t_guanggao values(#{guanggao.id},#{guanggao.imageurl},#{guanggao.pid},#{guanggao.info},#{guanggao.companyid},#{guanggao.status},#{guanggao.price})")
     void saveguanggao(@Param("guanggao") Guanggao guanggao);
     @Update("updata from t_guanggao set status ='2' where gid = #{ggid}")
     void updatestatus(@Param("ggid") String ggid);
@@ -40,4 +40,19 @@ public interface IGuanggaoMapper {
 
     @Select("select id,companyname from ${biaoid}")
     List<Company> querycompany(@Param("biaoid") String biaoid);
+
+    @Select("select * from t_guanggao where pid =1 and status=2 order by price desc")
+    List<Guanggao> selectallguanggao();
+    @Select("select * from t_guanggao where pid =2 and status=2 order by price desc")
+    List<Guanggao> selecterhaoguanggao();
+    @Select("select * from t_guanggao where pid =3 and status=2 order by price desc")
+    List<Guanggao> selectsanhaoguanggao();
+
+    @Select("select * from t_guanggao where pid =4 and status=2 order by price desc")
+    List<Guanggao> selectsihaoguanggao();
+
+    @Select("select * from t_guanggao where pid =5 and status=2 order by price desc")
+    List<Guanggao> selectwuhaoguanggao();
+
+
 }
