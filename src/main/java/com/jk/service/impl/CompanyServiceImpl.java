@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -272,6 +273,70 @@ public class CompanyServiceImpl implements ICompanyService {
 
 
 
+    }
+
+    @Override
+    public List<Company> queryCompanyeList(Integer page, Integer rows) {
+        String [] arr ={"t_company","t_company13","t_company15","t_company17"};
+        int start = (page-1)*rows;
+        List<Company> companyList = new ArrayList<Company>();
+        for (String biaoid: arr) {
+
+            List<Company> list1 = companyDao.queryCompangList(start,rows,biaoid);
+            for (Company company : list1) {
+                companyList.add(company);
+            }
+        }
+        return companyList;
+    }
+
+    @Override
+    public long querycompanycount() {
+        String [] arr ={"t_company","t_company13","t_company15","t_company17"};
+        long count =0;
+        long acount=0;
+        for (String biaoid: arr) {
+            acount = companyDao.queryCompanyCount(biaoid);
+            count+=acount;
+        }
+        return count;
+    }
+
+    @Override
+    public void updateCompanyStatus(String s) {
+        String id = s;
+        String [] arr ={"t_company","t_company13","t_company15","t_company17"};
+        for (String biaoid: arr) {
+            companyDao.updateCompanyStatus(id,biaoid);
+        }
+
+    }
+
+    @Override
+    public List<Company> selectCompanyeTwoList(Integer page, Integer rows) {
+        String [] arr ={"t_company","t_company13","t_company15","t_company17"};
+        int start = (page-1)*rows;
+        List<Company> companyList = new ArrayList<Company>();
+        for (String biaoid: arr) {
+
+            List<Company> list1 = companyDao.selectCompangTwoList(start,rows,biaoid);
+            for (Company company : list1) {
+                companyList.add(company);
+            }
+        }
+        return companyList;
+    }
+
+    @Override
+    public long selectcompanyTwocount() {
+        String [] arr ={"t_company","t_company13","t_company15","t_company17"};
+        long count =0;
+        long acount=0;
+        for (String biaoid: arr) {
+            acount = companyDao.selectCompanyCount(biaoid);
+            count+=acount;
+        }
+        return count;
     }
 
 
