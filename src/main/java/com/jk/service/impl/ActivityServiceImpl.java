@@ -34,7 +34,7 @@ public class ActivityServiceImpl implements IActivityService {
     private IActivityMapper activityMapper;
 
     @Override
-    public List<BankType> queryActivityList(Integer page, Integer rows) {
+    public List<Activity> queryActivityList(Integer page, Integer rows) {
         int start = (page-1)*rows;
         return activityMapper.queryActivityList(start,rows);
     }

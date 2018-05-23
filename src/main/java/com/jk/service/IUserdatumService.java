@@ -58,4 +58,13 @@ public interface IUserdatumService {
     int selectUsercount(String loginname, String password);
 
     List<Map<String,Object>> selectalljobto(String userid);
+
+    /**
+     * 以下验证码
+     * @param phone
+     * @param password1
+     * @param
+     * @return
+     */
+    String saveuserinfo(String phone, String password1);
 }

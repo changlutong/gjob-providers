@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by ASUS on 2018/5/15.
@@ -158,6 +159,29 @@ public class UserdatumServiceImpl implements IUserdatumService {
         List<Map<String, Object>> list = iuserdatumMapper.selectalljobto(userid);
         return list;
     }
+
+    /**
+     * 验证码
+     * @param phone
+     * @param password1
+     * @param
+     * @return
+     */
+    @Override
+    public String saveuserinfo(String phone, String password1) {
+        int count = iuserdatumMapper.saveuserinfocount(phone,password1);
+        if(count < 1){
+            String uuid ="";
+            for(int i=0;i<1;i++){
+                uuid = UUID.randomUUID().toString().replaceAll("-", "");
+                System.out.println(uuid);
+            }
+             iuserdatumMapper.saveuserinfo(phone,password1,uuid);
+            return "8";
+        }
+        return "7";
+    }
+
 
     @Override
     public List<Tpersonal> selectUserlogin(String loginname, String password) {

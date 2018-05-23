@@ -51,6 +51,9 @@ public interface ICompanyDao {
     @Select("select * from ${companytablename} where id=#{phone}")
     List <Company>querycompanyloginstatus(@Param("phone") String phone,@Param("companytablename") String companytablename);
 
+    @Delete("delete from ${s} where id = #{idss}")
+    void deletecompany(@Param("s") String s,@Param("idss") String idss);
+
 /*    @Update("update from ${s} set checkstatus=2 where id = #{s1}")
     void updateCompanyStatus(@Param("s1") String s1, @Param("s") String s);*/
 }

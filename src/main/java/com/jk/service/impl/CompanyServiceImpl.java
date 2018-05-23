@@ -436,6 +436,18 @@ public class CompanyServiceImpl implements ICompanyService {
         return count;
     }
 
+    @Override
+    public void deletecompany(String idss) {
+        String [] arr ={"t_company","t_company13","t_company15","t_company17"};
+        /*for (String biaoid: arr) {
+            companyDao.deletecompany(idss,biaoid);
+        }*/
+        for (int i = 0;i<arr.length;i++){
+            companyDao.deletecompany(arr[i].toString(),idss);
+        }
+
+    }
+
 
 /*
     @Override
