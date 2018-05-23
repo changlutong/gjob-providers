@@ -49,7 +49,7 @@ public interface ICompanyDao {
     long selectCompanyCount(@Param("biaoid") String biaoid);
 
     @Select("select * from ${companytablename} where id=#{phone}")
-    List<Company> querycompanyloginstatus(@Param("phone") String phone,@Param("companytablename") String companytablename);
+    List <Company>querycompanyloginstatus(@Param("phone") String phone,@Param("companytablename") String companytablename);
 
 /*    @Update("update from ${s} set checkstatus=2 where id = #{s1}")
     void updateCompanyStatus(@Param("s1") String s1, @Param("s") String s);*/
