@@ -18,7 +18,7 @@ public interface ICompanyDao {
     @Select("select * from ${companytablename} where username=#{username}")
     List<Company> quaryusername(@Param("username") String username,@Param("companytablename") String companytablename);
 //注册
-    @Insert("insert into ${companytablename} (id,companyname,companyprovince,companycity,contacts,sex,companyfixedphone,username,password,email,tradinglicense,legalpersonname,checkstatus,companytablename,category ,idcardpicture)  values (#{id},#{companyname},#{companyprovince},#{companycity},#{contacts},#{sex},#{companyfixedphone},#{username}, #{password}, #{email},#{tradinglicense},#{legalpersonname},  #{checkstatus},#{companytablename}, #{category}, #{idcardpicture})")
+    @Insert("insert into ${companytablename} (id,companyname,companyprovince,companycity,contacts,sex,companyfixedphone,username,password,email,tradinglicense,legalpersonname,checkstatus,companytablename,category ,idcardpicture,idcardpicturefan)  values (#{id},#{companyname},#{companyprovince},#{companycity},#{contacts},#{sex},#{companyfixedphone},#{username}, #{password}, #{email},#{tradinglicense},#{legalpersonname},  #{checkstatus},#{companytablename}, #{category}, #{idcardpicture},#{idcardpicture})")
     void tosavecompany(Company company);
 
     //登陆
@@ -47,6 +47,9 @@ public interface ICompanyDao {
 
     @Select("select count(*) from ${biaoid} where checkstatus=2")
     long selectCompanyCount(@Param("biaoid") String biaoid);
+
+    @Select("select * from ${companytablename} where id=#{phone}")
+    List<Company> querycompanyloginstatus(@Param("phone") String phone,@Param("companytablename") String companytablename);
 
 /*    @Update("update from ${s} set checkstatus=2 where id = #{s1}")
     void updateCompanyStatus(@Param("s1") String s1, @Param("s") String s);*/

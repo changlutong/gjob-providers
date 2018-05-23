@@ -101,4 +101,22 @@ public class CompanycltServiceImpl implements ICompanycltService{
         List<Map<String, Object>> list=companycltMapper.selectjiobclt2(job.getEduback(),job.getWorkspace());
         return list;
     }
+
+    @Override
+    public List<Job> selectalljob(Job job) {
+
+        List<Job>  list = companycltMapper.selectalljob(job);
+
+        return list;
+    }
+
+    @Override
+    public void toudijianli(String jobid, String userid) {
+
+
+        String uuid = UUID.randomUUID().toString().replaceAll("-","");
+
+        companycltMapper.toudijianli(jobid,userid,uuid);
+
+    }
 }
