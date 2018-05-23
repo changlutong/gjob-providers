@@ -30,7 +30,7 @@ import java.util.List;
 public interface IActivityMapper {
 
     @Select("select * from t_huodong limit #{start},#{rows}")
-    List<BankType> queryActivityList(@Param("start") int start,@Param("rows") Integer rows);
+    List<Activity> queryActivityList(@Param("start") int start,@Param("rows") Integer rows);
 
     @Select("select count(*) from t_huodong")
     long queryActivityCount();
