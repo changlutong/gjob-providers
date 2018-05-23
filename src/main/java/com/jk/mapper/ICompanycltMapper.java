@@ -22,7 +22,7 @@ public interface ICompanycltMapper {
 
     @InsertProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "insertJobById")
     void addzhiwei(Job job);
-    @Select(" select * from t_job ")
+    @Select(" select * from t_job where companyphone=#{companyid}")
     List<Map<String,Object>> getzhiweilist(@Param("companyid")String companyid);
     @Select(" select * from t_job where id= #{str}")
     Map<String,Object> selectjobbyid(@Param("str")String str);
