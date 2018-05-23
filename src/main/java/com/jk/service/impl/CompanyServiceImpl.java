@@ -147,20 +147,23 @@ public class CompanyServiceImpl implements ICompanyService {
                List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
 
                 String id = statuslist.get(0).getId();
-               if(statuslist.get(0).getCheckstatus()==1){
+                String companyname = statuslist.get(0).getCompanyname();
+
+                if(statuslist.get(0).getCheckstatus()==1){
 
 
-                   return "3,"+id;
+                   return "3"+","+id+","+companyname;
 
                }else if(statuslist.get(0).getCheckstatus()==2){
 
-                   return "2,"+id;
+                   return "2"+","+id+","+companyname;
 
 
                }
-              return "4";
+              return "4"+","+id;
 
             }
+            return "1"+","+"1";
         } else if ("15".equals(cphone)) {
             company.setCompanytablename("t_company15");
             String companytablename = company.getCompanytablename();
@@ -170,19 +173,22 @@ public class CompanyServiceImpl implements ICompanyService {
                 List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
 
                 String id = statuslist.get(0).getId();
+                String companyname = statuslist.get(0).getCompanyname();
+
                 if(statuslist.get(0).getCheckstatus()==1){
 
 
-                    return "3,"+id;
+                    return "3"+","+id+","+companyname;
 
                 }else if(statuslist.get(0).getCheckstatus()==2){
 
-                    return "2,"+id;
+                    return "2"+","+id+","+companyname;
 
 
                 }
-                return "4";
+                return "4"+","+id;
             }
+            return "1"+","+"1";
         } else if ("17".equals(cphone)) {
             company.setCompanytablename("t_company17");
             String companytablename = company.getCompanytablename();
@@ -191,19 +197,22 @@ public class CompanyServiceImpl implements ICompanyService {
                 List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
 
                 String id = statuslist.get(0).getId();
+                String companyname = statuslist.get(0).getCompanyname();
+
                 if(statuslist.get(0).getCheckstatus()==1){
 
 
-                    return "3,"+id;
+                    return "3"+","+id+","+companyname;
 
                 }else if(statuslist.get(0).getCheckstatus()==2){
 
-                    return "2,"+id;
+                    return "2"+","+id+","+companyname;
 
 
                 }
-                return "4";
+                return "4"+","+id;
             }
+            return "1"+","+"1";
         } else {
             company.setCompanytablename("t_company");
             String companytablename = company.getCompanytablename();
@@ -213,21 +222,23 @@ public class CompanyServiceImpl implements ICompanyService {
                 List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
 
                 String id = statuslist.get(0).getId();
+                String companyname = statuslist.get(0).getCompanyname();
+
                 if(statuslist.get(0).getCheckstatus()==1){
 
 
-                    return "3,"+id;
+                    return "3"+","+id+","+companyname;
 
                 }else if(statuslist.get(0).getCheckstatus()==2){
 
-                    return "2,"+id;
+                    return "2"+","+id+","+companyname;
 
 
                 }
-                return "4";
+                return "4"+","+id;
             }
+            return "1"+","+"1";
         }
-        return "1";//1为账号密码错
 
     }
 
@@ -248,7 +259,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
                 try {
 
-   EmailUtil.sendHtmlMail(email, "密码修改信息","<a href='http://localhost:8087/company/findpassword.jsp?id='"+cphone+">aaa</a>");
+   EmailUtil.sendHtmlMail(email, "密码修改信息","<a href='http://192.168.31.65:8087/company/findpassword.jsp?id='"+cphone+">aaa</a>");
 
                 } catch (MessagingException e) {
                     e.printStackTrace();
@@ -267,7 +278,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
                 try {
 
-                    EmailUtil.sendHtmlMail(email, "密码修改信息","<a href='http://localhost:8087/company/findpassword.jsp?id='"+cphone+">aaa</a>");
+                    EmailUtil.sendHtmlMail(email, "密码修改信息","<a href='http://192.168.31.65:8087/company/findpassword.jsp?id='"+cphone+">aaa</a>");
 
                 } catch (MessagingException e) {
                     e.printStackTrace();
@@ -287,7 +298,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
                 try {
 
-                    EmailUtil.sendHtmlMail(email, "密码修改信息","http://localhost:8087/company/findpassword.jsp?id="+cphone);
+                    EmailUtil.sendHtmlMail(email, "密码修改信息","http://192.168.31.65:8087/company/findpassword.jsp?id="+cphone);
 
                 } catch (MessagingException e) {
                     e.printStackTrace();
@@ -308,7 +319,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
                 try {
 
-                    EmailUtil.sendHtmlMail(email, "密码修改信息","http://localhost:8087/company/findpassword.jsp?id="+cphone);
+                    EmailUtil.sendHtmlMail(email, "密码修改信息","http://192.168.31.65:8087/company/findpassword.jsp?id="+cphone);
 
                 } catch (MessagingException e) {
                     e.printStackTrace();
