@@ -34,6 +34,8 @@ public interface ICompanycltMapper {
     List<Map<String,Object>> selectjiobclt2(@Param("edu")String edu,@Param("wspa")String wspa);
     @SelectProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "selectalljob")
     List<Job> selectalljob(@Param("job") Job job);
+    @Insert("insert into t_job_user(id,jobid,userid)values(#{uuid},#{jobid},#{userid}) ")
+    void toudijianli(@Param("jobid") String jobid, @Param("userid")String userid, @Param("uuid")String uuid);
 
 
     class JobDaoProvider {
@@ -110,9 +112,9 @@ public interface ICompanycltMapper {
         }
         public String selectalljob(@Param("job")Job job){
 
-            String sql ="select * from t_job";
+            String sql ="select * from t_job where showstatus=2";
             if(job.getWorkname()!=null&&!"".equals(job.getWorkname())){
-                sql+=" where workname like '%"+job.getWorkname()+"%'";
+                sql+=" and workname like '%"+job.getWorkname()+"%'";
             }
           return sql;
         }

@@ -24,4 +24,6 @@ public interface ICompanycltService {
     List<Map<String,Object>> selectjiobclt2(String companyid, Job job);
 
     List<Job> selectalljob(Job job);
+
+    void toudijianli(String jobid, String userid);
 }
