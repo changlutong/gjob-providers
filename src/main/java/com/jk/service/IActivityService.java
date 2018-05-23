@@ -25,7 +25,7 @@ import java.util.List;
  */
 public interface IActivityService {
 
-    List<BankType> queryActivityList(Integer page, Integer rows);
+    List<Activity> queryActivityList(Integer page, Integer rows);
 
     long queryActivitycount();
 

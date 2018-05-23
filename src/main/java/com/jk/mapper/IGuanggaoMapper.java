@@ -27,9 +27,9 @@ import java.util.List;
 @Mapper
 public interface IGuanggaoMapper {
 
-    @Select("select count(*) from t_guanggao")
+    @Select("select count(*) from t_guanggao where status='2'")
     long selectCount();
-    @Select("select * from t_guanggao limit #{start},#{rows}")
+    @Select("select * from t_guanggao where status='2' limit #{start},#{rows}")
     List<Guanggao> userList(@Param("start") int start,@Param("rows") Integer rows);
     @Insert("insert into t_guanggao values(#{guanggao.id},#{guanggao.imageurl},#{guanggao.pid},#{guanggao.info},#{guanggao.companyid},#{guanggao.status},#{guanggao.price})")
     void saveguanggao(@Param("guanggao") Guanggao guanggao);
@@ -55,4 +55,9 @@ public interface IGuanggaoMapper {
     List<Guanggao> selectwuhaoguanggao();
 
 
+    @Select("select * from t_guanggao where status='1' limit #{start},#{rows}")
+    List<Guanggao> queryguanggaotwo(int start, Integer rows);
+
+    @Select("select count(*) from t_guanggao where status='1'")
+    long queryCountTwo();
 }

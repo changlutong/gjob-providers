@@ -228,4 +228,20 @@ public interface IUserdatumMapper {
 
     @Select("select t2.workname,t2.workspace,t2.workinfo,t2.salary,t2.id from t_job_user t1,t_job t2 where t1.jobid = t2.id and t1.userid = #{userid}")
     List<Map<String,Object>> selectalljobto(@Param("userid")String userid);
+
+    /**
+     * 验证码块
+     * @param phone
+     * @param password1
+     * @return
+     */
+    @Select("select count(*) from t_personal where phone = #{phone} and password = #{password1}")
+    int saveuserinfocount(@Param("phone")String phone,@Param("password1") String password1);
+    /**
+     * 验证码块 新增
+     * @param phone
+     * @param password1  //自动转义     * @return   REPLACE(UUID(),"-","")
+     */
+    @Insert("insert into t_personal(phone,password,uuids)values(#{phone},#{password1},#{uuid})")
+    void saveuserinfo(@Param("phone")String phone, @Param("password1")String password1, @Param("uuid")String uuid);
 }
