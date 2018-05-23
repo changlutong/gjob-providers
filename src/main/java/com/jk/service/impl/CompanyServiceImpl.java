@@ -248,7 +248,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
                 try {
 
-   EmailUtil.sendHtmlMail(email, "密码修改信息","<a href='http://localhost:8087/company/findpassword.jsp?id='"+cphone+">aaa</a>");
+   EmailUtil.sendHtmlMail(email, "密码修改信息","<a href='http://192.168.31.222:8888/company/findpassword.jsp?id='"+cphone+">aaa</a>");
 
                 } catch (MessagingException e) {
                     e.printStackTrace();
@@ -267,7 +267,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
                 try {
 
-                    EmailUtil.sendHtmlMail(email, "密码修改信息","<a href='http://localhost:8087/company/findpassword.jsp?id='"+cphone+">aaa</a>");
+                    EmailUtil.sendHtmlMail(email, "密码修改信息","<a href='http://192.168.31.222:8888/company/findpassword.jsp?id='"+cphone+">aaa</a>");
 
                 } catch (MessagingException e) {
                     e.printStackTrace();
@@ -287,7 +287,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
                 try {
 
-                    EmailUtil.sendHtmlMail(email, "密码修改信息","http://localhost:8087/company/findpassword.jsp?id="+cphone);
+                    EmailUtil.sendHtmlMail(email, "密码修改信息","http://192.168.31.222:8888/company/findpassword.jsp?id="+cphone);
 
                 } catch (MessagingException e) {
                     e.printStackTrace();
@@ -308,7 +308,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
                 try {
 
-                    EmailUtil.sendHtmlMail(email, "密码修改信息","http://localhost:8087/company/findpassword.jsp?id="+cphone);
+                    EmailUtil.sendHtmlMail(email, "密码修改信息","http://192.168.31.222:8888/company/findpassword.jsp?id="+cphone);
 
                 } catch (MessagingException e) {
                     e.printStackTrace();
