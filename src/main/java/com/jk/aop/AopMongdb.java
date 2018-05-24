@@ -144,6 +144,7 @@ public class AopMongdb {
       logs.setClazzName(jp.getSignature().getDeclaringTypeName().toString());
       logs.setMethodName(jp.getSignature().getName());
       logs.setParams(params);
+      logs.setIsexception("异常");
       mongoTemplate.insert(logs);
         System.out.println("方法异常时执行.....");
     }
