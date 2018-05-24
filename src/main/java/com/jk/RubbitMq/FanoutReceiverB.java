@@ -15,6 +15,7 @@ import static com.jk.util.EmailUtil.sendHtmlMail;
 @RabbitListener(queues = "fanout.B")
 public class FanoutReceiverB {
 
+
     @RabbitHandler
     public void process(List<Company> list) throws UnsupportedEncodingException, MessagingException {
 

@@ -22,6 +22,7 @@ public class FanoutReceiverA {
 
         togetString(userphone);
 
+
         System.out.println("fanout Receiver A  : " + userphone );
     }
 
