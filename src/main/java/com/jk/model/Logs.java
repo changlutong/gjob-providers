@@ -9,6 +9,15 @@ public class Logs {
 	private String methodName;
 	private String params;
 	private String doituser;
+	private String isexception;
+
+	public String getIsexception() {
+		return isexception;
+	}
+
+	public void setIsexception(String isexception) {
+		this.isexception = isexception;
+	}
 
 	public String getDoituser() {
 		return doituser;
