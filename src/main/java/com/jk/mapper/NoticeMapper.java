@@ -28,4 +28,9 @@ public interface NoticeMapper {
 @Update("\tupdate t_notice set noticename = #{noticename}," +
         "noticedate = #{noticedate},noticebulletin = #{noticebulletin} where noticeid = #{noticeid}")
     int updateNotice(Notice notice);
+@Select("select * from t_notice")
+    List<Notice> querynotices(Notice notice);
+
+    @Select(" SELECT * from  t_notice where  noticeid=#{noticeid} ")
+    List<Notice> noticesids(@Param("noticeid") Integer noticeid);
 }
