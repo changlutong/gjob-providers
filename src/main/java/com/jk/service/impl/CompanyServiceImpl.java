@@ -24,7 +24,6 @@ import java.util.List;
  * Created by yuankang on 2018/5/15.
  */
 @Service("companyService")
-@Component
 public class CompanyServiceImpl implements ICompanyService {
 
     @Autowired
@@ -48,8 +47,6 @@ public class CompanyServiceImpl implements ICompanyService {
             company.setIdcardpicturefan(arr[2]);
 
 
-
-
         if ("13".equals(pp)) {
             //选表
             company.setCompanytablename("t_company13");
@@ -59,6 +56,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
             if (companyList == null || companyList.size() <= 0) {
                 List<Company> list = companyDao.quaryusername(username, companytablename);
+
                 if (list != null && list.size() > 0) {
                     return "6";//6为用户名已经存在
                 }
@@ -67,14 +65,6 @@ public class CompanyServiceImpl implements ICompanyService {
             }
             companyDao.tosavecompany(company);
 
-          /*  try {
-                String code = HttpClient.togetString(cphone);
-                rabbitTemplate.convertAndSend("messageskey",code);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-*/
             return "1";//1为注册成功
 
         } else if ("15".equals(pp)) {
@@ -128,13 +118,13 @@ public class CompanyServiceImpl implements ICompanyService {
 
         }
 
-
         return "3";//3为手机号不符合规则
     }
 
     @Override
     public String querycompanylogin(Company company) {
         String phone = company.getId();
+        String email = company.getEmail();
         String password = company.getPassword();
         String cphone = phone.substring(0, 2);
         if ("13".equals(cphone)) {
@@ -143,21 +133,19 @@ public class CompanyServiceImpl implements ICompanyService {
             String companytablename = company.getCompanytablename();
             List<Company> list = companyDao.querycompanylogin(phone, password, companytablename);
             if (list != null && list.size() > 0) {
-
+                //登陆成功是用rubbitmq实现发短信和邮件
+                this.rabbitTemplate.convertAndSend("fanoutExchange","", list);
                List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
-
                 String id = statuslist.get(0).getId();
                 String companyname = statuslist.get(0).getCompanyname();
 
                 if(statuslist.get(0).getCheckstatus()==1){
-
 
                    return "3"+","+id+","+companyname;
 
                }else if(statuslist.get(0).getCheckstatus()==2){
 
                    return "2"+","+id+","+companyname;
-
 
                }
               return "4"+","+id;
@@ -169,9 +157,9 @@ public class CompanyServiceImpl implements ICompanyService {
             String companytablename = company.getCompanytablename();
             List<Company> list = companyDao.querycompanylogin(phone, password, companytablename);
             if (list != null && list.size() > 0) {
-
+                //登陆成功是用rubbitmq实现发短信和邮件
+                this.rabbitTemplate.convertAndSend("fanoutExchange","", list);
                 List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
-
                 String id = statuslist.get(0).getId();
                 String companyname = statuslist.get(0).getCompanyname();
 
@@ -194,6 +182,8 @@ public class CompanyServiceImpl implements ICompanyService {
             String companytablename = company.getCompanytablename();
             List<Company> list = companyDao.querycompanylogin(phone, password, companytablename);
             if (list != null && list.size() > 0) {
+                //登陆成功是用rubbitmq实现发短信和邮件
+                this.rabbitTemplate.convertAndSend("fanoutExchange","", list);
                 List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
 
                 String id = statuslist.get(0).getId();
@@ -218,7 +208,8 @@ public class CompanyServiceImpl implements ICompanyService {
             String companytablename = company.getCompanytablename();
             List<Company> list = companyDao.querycompanylogin(phone, password, companytablename);
             if (list != null && list.size() > 0) {
-
+                //登陆成功是用rubbitmq实现发短信和邮件
+                this.rabbitTemplate.convertAndSend("fanoutExchange","", list);
                 List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
 
                 String id = statuslist.get(0).getId();
@@ -448,42 +439,6 @@ public class CompanyServiceImpl implements ICompanyService {
 
     }
 
-
-/*
-    @Override
-    public void sentEmailInfo(Company company)  {
-
-        String id = company.getId();
-        String phone = id.substring(0, 2);
-        if("13".equals(phone)){
-            company.setCompanytablename("t_company13");
-            String companytablename = company.getCompanytablename();
-            String email = company.getEmail();
-
-                try {
-
-    EmailUtil.sendHtmlMail("email", "密码修改信息","http://localhost:8087/company/findpassword.jsp?="+id);
-
-
-                } catch (MessagingException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-
-
-
-
-
-
-
-        }*/
-
-
-   // }
 
 
 
