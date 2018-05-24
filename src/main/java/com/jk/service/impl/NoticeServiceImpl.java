@@ -54,7 +54,16 @@ public class NoticeServiceImpl implements NoticeService {
     public int updateNotice(Notice notice) {
         return noticeMapper.updateNotice(notice);
     }
+    //==============================================================================================================
+    @Override
+    public List<Notice> querynotices(Notice notice) {
+        return noticeMapper.querynotices(notice);
+    }
 
+    @Override
+    public List<Notice> noticesids(Integer noticeid) {
+        return noticeMapper.noticesids(noticeid);
+    }
 
     public Date getDate() {
         return date;
