@@ -8,6 +8,7 @@ import com.jk.util.EmailUtil;
 import com.jk.util.HttpClient;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +34,8 @@ public class CompanyServiceImpl implements ICompanyService {
 
     @Autowired
     private AmqpTemplate rabbitTemplate;
-
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public String tosavecompany(Company company) {
@@ -133,6 +137,22 @@ public class CompanyServiceImpl implements ICompanyService {
             String companytablename = company.getCompanytablename();
             List<Company> list = companyDao.querycompanylogin(phone, password, companytablename);
             if (list != null && list.size() > 0) {
+                Company company1 =list.get(0);
+
+                try {
+                    //获取ip
+                    String hostAddress = InetAddress.getLocalHost().getHostAddress();
+                    //登陆成功把用户信息存到redis
+                    redisTemplate.opsForValue().set(hostAddress,company1);
+
+                    Company company2 = (Company)redisTemplate.opsForValue().get(hostAddress);
+                    System.out.println(company2);
+
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+
+
                 //登陆成功是用rubbitmq实现发短信和邮件
                 this.rabbitTemplate.convertAndSend("fanoutExchange","", list);
                List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
@@ -157,6 +177,24 @@ public class CompanyServiceImpl implements ICompanyService {
             String companytablename = company.getCompanytablename();
             List<Company> list = companyDao.querycompanylogin(phone, password, companytablename);
             if (list != null && list.size() > 0) {
+               Company company1 =list.get(0);
+
+                try {
+                    //获取ip
+                    String hostAddress = InetAddress.getLocalHost().getHostAddress();
+                    //登陆成功把用户信息存到redis
+                    redisTemplate.opsForValue().set(hostAddress,company1);
+
+                   Company company2 = (Company)redisTemplate.opsForValue().get(hostAddress);
+                    System.out.println(company2);
+
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
                 //登陆成功是用rubbitmq实现发短信和邮件
                 this.rabbitTemplate.convertAndSend("fanoutExchange","", list);
                 List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
@@ -182,6 +220,22 @@ public class CompanyServiceImpl implements ICompanyService {
             String companytablename = company.getCompanytablename();
             List<Company> list = companyDao.querycompanylogin(phone, password, companytablename);
             if (list != null && list.size() > 0) {
+
+                Company company1 =list.get(0);
+
+                try {
+                    //获取ip
+                    String hostAddress = InetAddress.getLocalHost().getHostAddress();
+                    //登陆成功把用户信息存到redis
+                    redisTemplate.opsForValue().set(hostAddress,company1);
+
+                    Company company2 = (Company)redisTemplate.opsForValue().get(hostAddress);
+                    System.out.println(company2);
+
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+
                 //登陆成功是用rubbitmq实现发短信和邮件
                 this.rabbitTemplate.convertAndSend("fanoutExchange","", list);
                 List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
@@ -208,6 +262,21 @@ public class CompanyServiceImpl implements ICompanyService {
             String companytablename = company.getCompanytablename();
             List<Company> list = companyDao.querycompanylogin(phone, password, companytablename);
             if (list != null && list.size() > 0) {
+                Company company1 =list.get(0);
+
+                try {
+                    //获取ip
+                    String hostAddress = InetAddress.getLocalHost().getHostAddress();
+                    //登陆成功把用户信息存到redis
+                    redisTemplate.opsForValue().set(hostAddress,company1);
+
+                    Company company2 = (Company)redisTemplate.opsForValue().get(hostAddress);
+                    System.out.println(company2);
+
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+
                 //登陆成功是用rubbitmq实现发短信和邮件
                 this.rabbitTemplate.convertAndSend("fanoutExchange","", list);
                 List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
@@ -250,8 +319,8 @@ public class CompanyServiceImpl implements ICompanyService {
 
                 try {
 
-   EmailUtil.sendHtmlMail(email, "密码修改信息","<a href='http://192.168.31.65:8087/company/findpassword.jsp?id='"+cphone+">aaa</a>");
-
+   //EmailUtil.sendHtmlMail(email, "密码修改信息","<a href='http://192.168.31.65:8087/company/findpassword.jsp?id='+cphone>点击修改密码</a>");
+                    EmailUtil.sendHtmlMail(email, "密码修改信息","http://192.168.31.65:8087/company/findpassword.jsp?id="+cphone);
                 } catch (MessagingException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
@@ -269,7 +338,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
                 try {
 
-                    EmailUtil.sendHtmlMail(email, "密码修改信息","<a href='http://192.168.31.65:8087/company/findpassword.jsp?id='"+cphone+">aaa</a>");
+                    EmailUtil.sendHtmlMail(email, "密码修改信息","http://192.168.31.65:8087/company/findpassword.jsp?id="+cphone);
 
                 } catch (MessagingException e) {
                     e.printStackTrace();
@@ -289,8 +358,8 @@ public class CompanyServiceImpl implements ICompanyService {
 
                 try {
 
+                    //EmailUtil.sendHtmlMail(email, "密码修改信息","http://192.168.31.65:8087/company/findpassword.jsp?id="+cphone);
                     EmailUtil.sendHtmlMail(email, "密码修改信息","http://192.168.31.65:8087/company/findpassword.jsp?id="+cphone);
-
                 } catch (MessagingException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
@@ -310,8 +379,8 @@ public class CompanyServiceImpl implements ICompanyService {
 
                 try {
 
+                    //EmailUtil.sendHtmlMail(email, "密码修改信息","http://192.168.31.65:8087/company/findpassword.jsp?id="+cphone);
                     EmailUtil.sendHtmlMail(email, "密码修改信息","http://192.168.31.65:8087/company/findpassword.jsp?id="+cphone);
-
                 } catch (MessagingException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
