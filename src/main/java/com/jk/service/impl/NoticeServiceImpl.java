@@ -54,7 +54,7 @@ public class NoticeServiceImpl implements NoticeService {
     public int updateNotice(Notice notice) {
         return noticeMapper.updateNotice(notice);
     }
-
+    //==============================================================================================================
     @Override
     public List<Notice> querynotices(Notice notice) {
         return noticeMapper.querynotices(notice);
