@@ -17,7 +17,7 @@ public interface NoticeMapper {
             "LIMIT #{page},#{rows}")
     List<Notice> querylistnotice(@Param("page") Integer page, @Param("rows") Integer rows, @Param("notice") Notice notice);
 
-    @Insert("   insert into t_notice ( noticename, noticedate,noticebulletin )\n" +
+    @Insert("   insert into t_notice ( noticename, noticedate,noticebulletin )" +
             "    values ( #{noticename}, #{noticedate}, #{noticebulletin})")
     int addnotice(@Param("noticeid") Integer noticeid,@Param("noticename") String noticename, @Param("noticedate") String noticedate,@Param("noticebulletin") String noticebulletin);
 
@@ -25,7 +25,7 @@ public interface NoticeMapper {
     void deletenotice(@Param("idss")int idss);
 @Select("select * from t_notice where noticeid = #{noticeid}")
     Notice upNotice(Integer noticeid);
-@Update("\tupdate t_notice set noticename = #{noticename}," +
+@Update("update t_notice set noticename = #{noticename}," +
         "noticedate = #{noticedate},noticebulletin = #{noticebulletin} where noticeid = #{noticeid}")
     int updateNotice(Notice notice);
 @Select("select * from t_notice")
