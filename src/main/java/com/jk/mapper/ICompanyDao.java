@@ -49,7 +49,7 @@ public interface ICompanyDao {
     long selectCompanyCount(@Param("biaoid") String biaoid);
 
     @Select("select * from ${companytablename} where id=#{phone}")
-    List<Company> querycompanyloginstatus(@Param("phone") String phone,@Param("companytablename") String companytablename);
+    List <Company>querycompanyloginstatus(@Param("phone") String phone,@Param("companytablename") String companytablename);
 
     @Delete("delete from ${s} where id = #{idss}")
     void deletecompany(@Param("s") String s,@Param("idss") String idss);
