@@ -21,6 +21,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -147,7 +148,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
                     Company company2 = (Company)redisTemplate.opsForValue().get(hostAddress);
                     System.out.println(company2);
-
+                    redisTemplate.expire(hostAddress,1800000 , TimeUnit.MILLISECONDS);//设置过期时间
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
@@ -187,7 +188,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
                    Company company2 = (Company)redisTemplate.opsForValue().get(hostAddress);
                     System.out.println(company2);
-
+                    redisTemplate.expire(hostAddress,1800000 , TimeUnit.MILLISECONDS);//设置过期时间
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
@@ -196,7 +197,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
 
                 //登陆成功是用rubbitmq实现发短信和邮件
-                this.rabbitTemplate.convertAndSend("fanoutExchange","", list);
+                //this.rabbitTemplate.convertAndSend("fanoutExchange","", list);
                 List<Company> statuslist = companyDao.querycompanyloginstatus(phone,companytablename);
                 String id = statuslist.get(0).getId();
                 String companyname = statuslist.get(0).getCompanyname();
@@ -231,7 +232,7 @@ public class CompanyServiceImpl implements ICompanyService {
 
                     Company company2 = (Company)redisTemplate.opsForValue().get(hostAddress);
                     System.out.println(company2);
-
+                    redisTemplate.expire(hostAddress,1800000 , TimeUnit.MILLISECONDS);//设置过期时间
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
@@ -269,6 +270,7 @@ public class CompanyServiceImpl implements ICompanyService {
                     String hostAddress = InetAddress.getLocalHost().getHostAddress();
                     //登陆成功把用户信息存到redis
                     redisTemplate.opsForValue().set(hostAddress,company1);
+                    redisTemplate.expire(hostAddress,1800000 , TimeUnit.MILLISECONDS);//设置过期时间
 
                     Company company2 = (Company)redisTemplate.opsForValue().get(hostAddress);
                     System.out.println(company2);
