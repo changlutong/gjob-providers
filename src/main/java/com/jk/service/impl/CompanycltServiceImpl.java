@@ -21,6 +21,8 @@ import com.jk.model.Company;
 import com.jk.model.Job;
 import com.jk.service.ICompanycltService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -63,7 +65,9 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
+    @CacheEvict(value = "selectjobbyid")
     public void addzhiwei(Job job) {
+
         job.setId(UUID.randomUUID().toString().replace("-",""));
         job.setCreatetime(new Date());
         job.setSalary(job.getSalary().replace(",","-"));
@@ -77,6 +81,7 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
+    @Cacheable(value = "selectjobbyid")
     public Map<String, Object> selectjobbyid(String str) {
         Map<String, Object>map=companycltMapper.selectjobbyid(str);
         return map;

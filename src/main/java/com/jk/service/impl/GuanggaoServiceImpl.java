@@ -138,4 +138,9 @@ public class GuanggaoServiceImpl implements IGuanggaoService {
     public long querycounttwo() {
         return guanggaoMapper.queryCountTwo();
     }
+
+    @Override
+    public void updateguanggaoStatus(String s) {
+        guanggaoMapper.updateguanggaoStatus(s);
+    }
 }
