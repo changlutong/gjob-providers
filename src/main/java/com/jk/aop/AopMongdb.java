@@ -50,7 +50,6 @@ public class AopMongdb {
     private  static  String url="";
     @Pointcut("execution(* com.jk.service.*.*(..))args(JoinPoint joinPoint)")
     public void webLog(){
-
     }
 
     @Before("webLog()")
@@ -82,7 +81,6 @@ public class AopMongdb {
         Object ompany = redisTemplate.opsForValue().get(ip);
         String name="";
         if(ompany!=null){
-
             Company company= (Company) ompany;
            String comname= company.getCompanyname();
            if(comname!=null&&!"".equals(comname)){
@@ -135,10 +133,6 @@ public class AopMongdb {
       for(int i=0;i<paramNames.length;i++){
           params+=paramNames[i]+":"+paramValues[i]+",";
       }
-
-
-
-
       Logs logs=new Logs();
       logs.setDoituser(name);
       logs.setClazzName(jp.getSignature().getDeclaringTypeName().toString());
