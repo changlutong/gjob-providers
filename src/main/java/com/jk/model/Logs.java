@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 
 public class Logs {
 	@Id
-	private String logId;
+	private String  logId;
 	private String clazzName;
 	private String methodName;
 	private String params;
