@@ -61,7 +61,7 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public List<Notice> noticesids(Integer noticeid) {
+    public Notice noticesids(Integer noticeid) {
         return noticeMapper.noticesids(noticeid);
     }
 

@@ -17,6 +17,7 @@
 package com.jk.service.impl;
 
 import com.jk.mapper.ICompanycltMapper;
+import com.jk.model.Company;
 import com.jk.model.Job;
 import com.jk.service.ICompanycltService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,5 +124,33 @@ public class CompanycltServiceImpl implements ICompanycltService{
 
         companycltMapper.toudijianli(jobid,userid,uuid);
 
+    }
+
+    @Override
+    public Job selectalljobbyid(String zpid) {
+        return companycltMapper.selectalljobbyid(zpid);
+    }
+
+    @Override
+    public Company selectcompanybyid(String gongsiid) {
+
+        String [] arr ={"t_company","t_company13","t_company15","t_company17"};
+        Company company=null;
+        for (String biaoid: arr) {
+          company = companycltMapper.selectcompanybyid(biaoid,gongsiid);
+
+            if(company!=null){
+
+               break;
+
+            }
+
+        }
+        return  company;
+    }
+
+    @Override
+    public List<Job> selectjobbygongsiid(String id) {
+        return companycltMapper.selectjobbygongsiid(id);
     }
 }
