@@ -56,8 +56,11 @@ public interface IGuanggaoMapper {
 
 
     @Select("select * from t_guanggao where status='1' limit #{start},#{rows}")
-    List<Guanggao> queryguanggaotwo(int start, Integer rows);
+    List<Guanggao> queryguanggaotwo(@Param("start") int start,@Param("rows") Integer rows);
 
     @Select("select count(*) from t_guanggao where status='1'")
     long queryCountTwo();
+
+    @Update("update t_guanggao set status = 2 where id=#{s}")
+    void updateguanggaoStatus(@Param("s") String s);
 }
