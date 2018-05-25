@@ -46,7 +46,7 @@ public interface IBankTypeMapper {
     @Select("select * from t_banktype")
     List<BankType> selectBankTypeList();
 
-    @Insert("insert into t_comcard (comid,cardnum,cardname,cardid) values(#{companyCard.comid},#{companyCard.cardnum},#{companyCard.cardname},#{companyCard.cardid})")
+    @Insert("insert into t_comcard (comid,cardnum,cardname,cardid,money) values(#{companyCard.comid},#{companyCard.cardnum},#{companyCard.cardname},#{companyCard.cardid},#{companyCard.money})")
     void savebankcard(@Param("companyCard") CompanyCard companyCard);
 
     @Select("select t1.*,t2.imageurl as bankimg,t2.bankname as bankcardname from t_comcard t1,t_banktype t2 where t1.cardid = t2.id")
