@@ -143,4 +143,9 @@ public class CompanycltServiceImpl implements ICompanycltService{
         }
         return  company;
     }
+
+    @Override
+    public List<Job> selectjobbygongsiid(String id) {
+        return companycltMapper.selectjobbygongsiid(id);
+    }
 }

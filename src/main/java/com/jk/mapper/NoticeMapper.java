@@ -32,5 +32,5 @@ public interface NoticeMapper {
     List<Notice> querynotices(Notice notice);
 
     @Select(" SELECT * from  t_notice where  noticeid=#{noticeid} ")
-    List<Notice> noticesids(@Param("noticeid") Integer noticeid);
+    Notice noticesids(@Param("noticeid") Integer noticeid);
 }

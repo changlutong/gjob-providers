@@ -42,6 +42,8 @@ public interface ICompanycltMapper {
 
     @Select("select * from ${biaoid} where id= #{gongsiid}")
     Company selectcompanybyid(@Param("biaoid")String biaoid,@Param("gongsiid") String gongsiid);
+    @Select(" select * from t_job where companyphone= #{id}")
+    List<Job> selectjobbygongsiid(String id);
 
 
     class JobDaoProvider {

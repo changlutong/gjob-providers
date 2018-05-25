@@ -31,4 +31,6 @@ public interface ICompanycltService {
     Job selectalljobbyid(String zpid);
 
     Company selectcompanybyid(String gongsiid);
+
+    List<Job> selectjobbygongsiid(String id);
 }
