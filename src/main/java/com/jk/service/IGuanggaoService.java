@@ -72,4 +72,6 @@ public interface IGuanggaoService {
     List<Guanggao> queryguanggaotwo(Integer page, Integer rows);
 
     long querycounttwo();
+
+    void updateguanggaoStatus(String s);
 }

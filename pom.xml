@@ -133,6 +133,19 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.23</version>
 		</dependency>
+
+		<!-- mongodb -->
+
+
+		<!-- aop -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+
+
+
 	</dependencies>
 
 	<build>

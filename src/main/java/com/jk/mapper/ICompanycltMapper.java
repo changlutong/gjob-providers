@@ -1,5 +1,6 @@
 package com.jk.mapper;
 
+import com.jk.model.Company;
 import com.jk.model.Job;
 import org.apache.ibatis.annotations.*;
 
@@ -36,6 +37,13 @@ public interface ICompanycltMapper {
     List<Job> selectalljob(@Param("job") Job job);
     @Insert("insert into t_job_user(id,jobid,userid)values(#{uuid},#{jobid},#{userid}) ")
     void toudijianli(@Param("jobid") String jobid, @Param("userid")String userid, @Param("uuid")String uuid);
+    @Select(" select * from t_job where id= #{zpid}")
+    Job selectalljobbyid(@Param("zpid")String zpid);
+
+    @Select("select * from ${biaoid} where id= #{gongsiid}")
+    Company selectcompanybyid(@Param("biaoid")String biaoid,@Param("gongsiid") String gongsiid);
+    @Select(" select * from t_job where companyphone= #{id}")
+    List<Job> selectjobbygongsiid(String id);
 
 
     class JobDaoProvider {

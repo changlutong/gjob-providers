@@ -11,11 +11,10 @@
 package com.jk.mapper;
 
 import com.jk.model.BankType;
+import com.jk.model.CompanyCard;
+import com.jk.model.Score;
 import com.jk.model.Tree;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -43,4 +42,34 @@ public interface IBankTypeMapper {
 
     @Select("select * from t_tree")
     List<Tree> queryTreeList();
+
+    @Select("select * from t_banktype")
+    List<BankType> selectBankTypeList();
+
+    @Insert("insert into t_comcard (comid,cardnum,cardname,cardid,money) values(#{companyCard.comid},#{companyCard.cardnum},#{companyCard.cardname},#{companyCard.cardid},#{companyCard.money})")
+    void savebankcard(@Param("companyCard") CompanyCard companyCard);
+
+    @Select("select t1.*,t2.imageurl as bankimg,t2.bankname as bankcardname from t_comcard t1,t_banktype t2 where t1.cardid = t2.id")
+    List<CompanyCard> querybankcard();
+
+    @Select("select * from t_comcard where cid=#{cid}")
+    CompanyCard queryBankCardById(@Param("cid") Integer cid);
+
+    @Delete("delete from t_comcard where cid=#{cid}")
+    void deleteBankCardById(@Param("cid") Integer cid);
+
+    @Select("select * from t_score where comid=#{comid}")
+    Score queryComScore(@Param("comid") String comid);
+
+    @Select("select * from t_score where comid=#{comid}")
+    Score queryscoreById(@Param("comid") String comid);
+
+    @Insert("insert into t_score (comid,score) values(#{score1.comid},#{score1.score})")
+    Integer addcompanychongzhi(@Param("score1") Score score1);
+
+    @Update("update t_score set score=(score+#{aLong}) where comid=#{comid}")
+    Integer updatejifen(@Param("comid") String comid,@Param("aLong") Long aLong);
+
+    @Update("update t_comcard set money=(money-#{aLong}) where cardid=#{valll}")
+    void updatebankcard(@Param("aLong") Long aLong,@Param("valll") String valll);
 }
