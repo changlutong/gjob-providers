@@ -188,4 +188,7 @@ public class UserdatumServiceImpl implements IUserdatumService {
        List <Tpersonal> list = iuserdatumMapper.selectUserlogin(loginname,password);
         return list;
     }
+
+
+
 }
