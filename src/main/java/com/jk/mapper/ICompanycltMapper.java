@@ -47,6 +47,10 @@ public interface ICompanycltMapper {
     Company selectcompanybyid(@Param("biaoid")String biaoid,@Param("gongsiid") String gongsiid);
     @Select(" select * from t_job where companyphone= #{id}")
     List<Job> selectjobbygongsiid(String id);
+    @Select(" select * from t_jybj t1,t_grxx t2 where t1.jybjid=t2.usergrxxid and  t2.usergrxxid=#{str}")
+    Map<String,String> shoudaojianlixiqngqing(@Param("str")String str);
+    @Delete(" delete from t_job where id=#{id} ")
+    void deletejobbyid(String id);
 
     @Update("update t_score set score=score-10 where comid= #{companyid}")
     void updatejifenjianshao(@Param("companyid") String companyid);
