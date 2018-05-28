@@ -52,7 +52,7 @@ public class SolrServiceImpl implements ISolrService {
     @Override
     public QueryJob getsolrjoblist(Integer page,Integer row, String queryname) throws ParseException {
         if(page==null){
-            page=1;
+            page=0;
         }
         if(row==null){
             row=10;
@@ -60,6 +60,9 @@ public class SolrServiceImpl implements ISolrService {
         Map<String,Object> map= getsolrjoblisttool(page, row, queryname,"workname");
         if(map==null){
              map= getsolrjoblisttool(page, row, queryname,"worktype");
+        }
+        if(map==null){
+            return null;
         }
         List<Job>list= (List<Job>) map.get("rows");
        Integer total = (Integer) map.get("total");
