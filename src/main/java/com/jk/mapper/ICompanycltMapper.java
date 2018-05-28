@@ -44,6 +44,10 @@ public interface ICompanycltMapper {
     Company selectcompanybyid(@Param("biaoid")String biaoid,@Param("gongsiid") String gongsiid);
     @Select(" select * from t_job where companyphone= #{id}")
     List<Job> selectjobbygongsiid(String id);
+    @Select(" select * from t_jybj t1,t_grxx t2 where t1.jybjid=t2.usergrxxid and  t2.usergrxxid=#{str}")
+    Map<String,String> shoudaojianlixiqngqing(@Param("str")String str);
+    @Delete(" delete from t_job where id=#{id} ")
+    void deletejobbyid(String id);
 
 
     class JobDaoProvider {

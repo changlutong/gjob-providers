@@ -33,4 +33,6 @@ public interface ICompanycltService {
     Company selectcompanybyid(String gongsiid);
 
     List<Job> selectjobbygongsiid(String id);
+    Map<String,String> shoudaojianlixiqngqing(String str);
+    void deletejobbyid(String id);
 }
