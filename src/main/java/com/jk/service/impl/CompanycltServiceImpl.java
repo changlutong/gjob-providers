@@ -38,7 +38,7 @@ import java.util.*;
 @Service("companycltService")
 public class CompanycltServiceImpl implements ICompanycltService{
     @Autowired
-    private ICompanycltMapper companycltMapper;
+    private  ICompanycltMapper companycltMapper;
 
     @Override
     public List<Map<String, Object>> getjlinfo(String companyid) {
@@ -65,7 +65,6 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
-    @CacheEvict(value = "selectjobbyid")
     public void addzhiwei(Job job) {
 
         job.setId(UUID.randomUUID().toString().replace("-",""));
@@ -81,11 +80,14 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
-    @Cacheable(value = "selectjobbyid")
-    public Map<String, Object> selectjobbyid(String str) {
+    public  Map<String, Object> selectjobbyid(String str) {
         Map<String, Object>map=companycltMapper.selectjobbyid(str);
         return map;
     }
+
+
+
+
 
     @Override
     public void updatejobstatus(Integer showstatus, String ids) {
