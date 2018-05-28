@@ -59,6 +59,11 @@ public interface IUserdatumService {
 
     List<Map<String,Object>> selectalljobto(String userid);
 
+    List<Map<String,Object>> selectallwdtdxq(String companyid);
+
+    List<Map<String,Object>> selectzls(String zwei, String xingz, String ddian);
+
+    List<Map<String,Object>> selectxgzp(String companyid);
     /**
      * 以下验证码
      * @param phone

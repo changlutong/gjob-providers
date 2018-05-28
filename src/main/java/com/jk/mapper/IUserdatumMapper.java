@@ -230,6 +230,21 @@ public interface IUserdatumMapper {
     List<Map<String,Object>> selectalljobto(@Param("userid")String userid);
 
     /**
+     *查询 当前用户所投递的 职业 详情
+     */
+    @Select("select t2.id,t2.workname,t2.workpro,t2.salary,t2.worknum,t2.eduback,t2.workexp,t2.workspace,t2.companyphone,t2.workinfo from t_job_user t1,t_job t2 where t1.jobid = t2.id and t1.userid = #{companyid}")
+    List<Map<String,Object>> selectallwdtdxq(@Param("companyid")String companyid);
+
+    /**
+     * 当前用户所投递的 职业 的相关推荐 详情
+     * * @param companyid
+     * @return
+     */
+    @Select("select t2.id,t2.workname,t2.workpro,t2.salary,t2.worknum,t2.eduback,t2.workexp,t2.workspace,t2.companyphone,t2.workinfo from t_job t2 where t2.id = #{companyid}")
+    List<Map<String,Object>> selectxgzp(@Param("companyid")String companyid);
+
+
+    /**
      * 验证码块
      * @param phone
      * @param password1
@@ -244,4 +259,25 @@ public interface IUserdatumMapper {
      */
     @Insert("insert into t_personal(phone,password,uuids)values(#{phone},#{password1},#{uuid})")
     void saveuserinfo(@Param("phone")String phone, @Param("password1")String password1, @Param("uuid")String uuid);
+
+
+
+    /**
+     *找类似  1  新方法
+     */
+    @SelectProvider(type = IUserdatumMapper.JobDaoProvider.class, method = "selectzls")
+    List<Map<String,Object>> selectzls(@Param("zwei")String zwei, @Param("xingz")String xingz, @Param("ddian")String ddian);
+
+    /**
+     *找类似 2  新方法
+     */
+    class JobDaoProvider {
+
+    public String selectzls(@Param("zwei")String zwei, @Param("xingz")String xingz, @Param("ddian")String ddian){
+       String sql =  "select workname,salary,id from t_job where workname like '%"+zwei+"%' and workpro = '"+xingz+"' and workspace = '"+ddian+"'";
+        return sql;
+    }
+    }
+    //@Select("<script>select workname,salary,id from t_job where workname like '%"+zwei+"'% and workpro = #{xingz} and workspace = #{ddian}</script>")
+   // List<Map<String,Object>> selectzls(@Param("zwei")String zwei, @Param("xingz")String xingz, @Param("ddian")String ddian);
 }
