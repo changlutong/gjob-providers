@@ -155,4 +155,17 @@ public class CompanycltServiceImpl implements ICompanycltService{
     public List<Job> selectjobbygongsiid(String id) {
         return companycltMapper.selectjobbygongsiid(id);
     }
+
+    @Override
+    public Map<String, String> shoudaojianlixiqngqing(String str) {
+        Map<String, String>map= companycltMapper.shoudaojianlixiqngqing(str);
+        return map;
+    }
+
+    @Override
+    public void deletejobbyid(String id) {
+        companycltMapper.deletejobbyid(id);
+    }
+
+
 }
