@@ -17,9 +17,13 @@
 package com.jk.service.impl;
 
 import com.jk.mapper.ICompanycltMapper;
+import com.jk.model.Company;
+import com.jk.model.Companyresume;
 import com.jk.model.Job;
 import com.jk.service.ICompanycltService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -35,7 +39,7 @@ import java.util.*;
 @Service("companycltService")
 public class CompanycltServiceImpl implements ICompanycltService{
     @Autowired
-    private ICompanycltMapper companycltMapper;
+    private  ICompanycltMapper companycltMapper;
 
     @Override
     public List<Map<String, Object>> getjlinfo(String companyid) {
@@ -63,6 +67,7 @@ public class CompanycltServiceImpl implements ICompanycltService{
 
     @Override
     public void addzhiwei(Job job) {
+
         job.setId(UUID.randomUUID().toString().replace("-",""));
         job.setCreatetime(new Date());
         job.setSalary(job.getSalary().replace(",","-"));
@@ -76,10 +81,14 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
-    public Map<String, Object> selectjobbyid(String str) {
+    public  Map<String, Object> selectjobbyid(String str) {
         Map<String, Object>map=companycltMapper.selectjobbyid(str);
         return map;
     }
+
+
+
+
 
     @Override
     public void updatejobstatus(Integer showstatus, String ids) {
@@ -119,4 +128,61 @@ public class CompanycltServiceImpl implements ICompanycltService{
         companycltMapper.toudijianli(jobid,userid,uuid);
 
     }
+
+    @Override
+    public Job selectalljobbyid(String zpid) {
+        return companycltMapper.selectalljobbyid(zpid);
+    }
+
+    @Override
+    public Company selectcompanybyid(String gongsiid) {
+
+        String [] arr ={"t_company","t_company13","t_company15","t_company17"};
+        Company company=null;
+        for (String biaoid: arr) {
+          company = companycltMapper.selectcompanybyid(biaoid,gongsiid);
+
+            if(company!=null){
+
+               break;
+
+            }
+
+        }
+        return  company;
+    }
+
+    @Override
+    public List<Job> selectjobbygongsiid(String id) {
+        return companycltMapper.selectjobbygongsiid(id);
+    }
+
+    @Override
+    public void addcompanyresume(Companyresume companyresume) {
+        Integer resumecompanyid = companyresume.getResumecompanyid();
+        String companyid = companyresume.getCompanyid();
+        String usergrxxid = companyresume.getUsergrxxid();
+
+        companycltMapper.addcompanyresume(resumecompanyid,companyid,usergrxxid);
+        companycltMapper.updatejifenjianshao(companyid);
+
+
+    }
+
+
+
+
+
+    @Override
+    public Map<String, String> shoudaojianlixiqngqing(String str) {
+        Map<String, String>map= companycltMapper.shoudaojianlixiqngqing(str);
+        return map;
+    }
+
+    @Override
+    public void deletejobbyid(String id) {
+        companycltMapper.deletejobbyid(id);
+    }
+
+
 }

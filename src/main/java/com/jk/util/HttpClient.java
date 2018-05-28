@@ -136,7 +136,7 @@ public class HttpClient {
         String url= "https://api.miaodiyun.com/20150822/industrySMS/sendSMS";
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("accountSid","c5103631f57e4490bdb1125e4db93335");
-        params.put("templateid","246490989");
+        params.put("templateid","250592693");
         int random = (int)((Math.random()* 1000000)+100000);
         params.put("param",random+"");
         params.put("to",userphone);

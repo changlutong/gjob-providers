@@ -1,5 +1,7 @@
 package com.jk.mapper;
 
+import com.jk.model.Company;
+import com.jk.model.Companyresume;
 import com.jk.model.Job;
 import org.apache.ibatis.annotations.*;
 
@@ -22,7 +24,7 @@ public interface ICompanycltMapper {
 
     @InsertProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "insertJobById")
     void addzhiwei(Job job);
-    @Select(" select * from t_job ")
+    @Select(" select * from t_job where companyphone=#{companyid}")
     List<Map<String,Object>> getzhiweilist(@Param("companyid")String companyid);
     @Select(" select * from t_job where id= #{str}")
     Map<String,Object> selectjobbyid(@Param("str")String str);
@@ -30,12 +32,31 @@ public interface ICompanycltMapper {
     void updatejobstatus(@Param("i")int i, @Param("ids")String ids);
     @Select(" select * from t_job where companyphone= #{companyid} and showstatus=2")
     List<Map<String,Object>> getzhiweilistfor2(String companyid);
+
     @SelectProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "selectJob")
     List<Map<String,Object>> selectjiobclt2(@Param("edu")String edu,@Param("wspa")String wspa);
+
     @SelectProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "selectalljob")
     List<Job> selectalljob(@Param("job") Job job);
     @Insert("insert into t_job_user(id,jobid,userid)values(#{uuid},#{jobid},#{userid}) ")
     void toudijianli(@Param("jobid") String jobid, @Param("userid")String userid, @Param("uuid")String uuid);
+    @Select(" select * from t_job where id= #{zpid}")
+    Job selectalljobbyid(@Param("zpid")String zpid);
+
+    @Select("select * from ${biaoid} where id= #{gongsiid}")
+    Company selectcompanybyid(@Param("biaoid")String biaoid,@Param("gongsiid") String gongsiid);
+    @Select(" select * from t_job where companyphone= #{id}")
+    List<Job> selectjobbygongsiid(String id);
+    @Select(" select * from t_jybj t1,t_grxx t2 where t1.jybjid=t2.usergrxxid and  t2.usergrxxid=#{str}")
+    Map<String,String> shoudaojianlixiqngqing(@Param("str")String str);
+    @Delete(" delete from t_job where id=#{id} ")
+    void deletejobbyid(String id);
+
+    @Update("update t_score set score=score-10 where comid= #{companyid}")
+    void updatejifenjianshao(@Param("companyid") String companyid);
+
+    @Insert("insert into t_companyresume (resumecompanyid,usergrxxid,companyid)values(#{resumecompanyid},#{usergrxxid},#{companyid})")
+    void addcompanyresume(@Param("resumecompanyid") Integer resumecompanyid,@Param("companyid") String companyid, @Param("usergrxxid") String usergrxxid );
 
 
     class JobDaoProvider {

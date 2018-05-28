@@ -12,6 +12,8 @@ package com.jk.service.impl;
 
 import com.jk.mapper.IBankTypeMapper;
 import com.jk.model.BankType;
+import com.jk.model.CompanyCard;
+import com.jk.model.Score;
 import com.jk.model.Tree;
 import com.jk.service.BankTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +64,64 @@ public class BankTypeServiceImpl implements BankTypeService {
     @Override
     public List<Tree> queryTreeList() {
         return bankTypeMapper.queryTreeList();
+    }
+
+    @Override
+    public List<BankType> selectBankTypeList() {
+        return bankTypeMapper.selectBankTypeList();
+    }
+
+    @Override
+    public void savebankcard(CompanyCard companyCard) {
+        bankTypeMapper.savebankcard(companyCard);
+    }
+
+    @Override
+    public List<CompanyCard> querybankcard() {
+        return bankTypeMapper.querybankcard();
+    }
+
+    @Override
+    public CompanyCard queryBankCardById(Integer cid) {
+        return bankTypeMapper.queryBankCardById(cid);
+    }
+
+    @Override
+    public void deleteBankCardById(Integer cid) {
+        bankTypeMapper.deleteBankCardById(cid);
+    }
+
+    @Override
+    public Score queryComScore(String comid) {
+        return bankTypeMapper.queryComScore(comid);
+    }
+
+    @Override
+    public String addcompanychongzhi(String comid, String money) {
+        Score score = bankTypeMapper.queryscoreById(comid);
+        if(score==null){
+            Score score1 = new Score();
+            score.setScore(Long.valueOf(money));
+            score.setComid(comid);
+            Integer i = bankTypeMapper.addcompanychongzhi(score1);
+            if(i!=null || !i.equals("")){
+                return "success";
+            }else {
+                return "fail";
+            }
+        }else {
+            Integer a = bankTypeMapper.updatejifen(comid,Long.valueOf(money));
+            if(a!=null || !a.equals("")){
+                return "success";
+            }else {
+                return "fail";
+            }
+        }
+    }
+
+    @Override
+    public void updatebankcard(Long aLong, String valll) {
+        bankTypeMapper.updatebankcard(aLong,valll);
     }
 
 }

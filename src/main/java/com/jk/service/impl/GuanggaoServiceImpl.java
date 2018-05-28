@@ -123,4 +123,24 @@ public class GuanggaoServiceImpl implements IGuanggaoService {
         List<Guanggao> list =guanggaoMapper.selectwuhaoguanggao();
         return  list;
     }
+
+    @Override
+    public List<Guanggao> queryguanggaotwo(Integer page, Integer rows) {
+
+        int start = (page-1)*rows;
+        List<Guanggao> list=guanggaoMapper.queryguanggaotwo(start,rows);
+
+
+        return list;
+    }
+
+    @Override
+    public long querycounttwo() {
+        return guanggaoMapper.queryCountTwo();
+    }
+
+    @Override
+    public void updateguanggaoStatus(String s) {
+        guanggaoMapper.updateguanggaoStatus(s);
+    }
 }
