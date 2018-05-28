@@ -39,4 +39,5 @@
 	<dubbo:service interface="com.jk.service.IGuanggaoService" ref="guanggaoService"></dubbo:service>
 	<dubbo:service interface="com.jk.service.ICompanycltService" ref="companycltService"></dubbo:service>
 	<dubbo:service interface="com.jk.service.IUserdatumService" ref="iUserdatum"></dubbo:service>
+	<dubbo:service interface="com.jk.service.LogService" ref="logService"></dubbo:service>
  </beans>	
