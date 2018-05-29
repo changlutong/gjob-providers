@@ -67,7 +67,6 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
-    @CacheEvict(value="getzhiweilist",key="'getzhiweilist'+#job.companyphone")
     public void addzhiwei(Job job) {
 
         job.setId(UUID.randomUUID().toString().replace("-",""));
@@ -76,11 +75,9 @@ public class CompanycltServiceImpl implements ICompanycltService{
         job.setShowstatus(1);
         companycltMapper.addzhiwei(job);
     }
-    @Override
-    @Cacheable(value="getzhiweilist",key="'getzhiweilist'+#companyid")
     public List<Map<String,Object>> getzhiweilist(String companyid){
         List<Map<String,Object>>list=  companycltMapper.getzhiweilist(companyid);
-        System.out.println("进入方法");
+
         return list;
     }
 
@@ -184,9 +181,9 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
-    @CacheEvict(value="getzhiweilist",allEntries = true)
     public void deletejobbyid(String id) {
         companycltMapper.deletejobbyid(id);
     }
+
 
 }
