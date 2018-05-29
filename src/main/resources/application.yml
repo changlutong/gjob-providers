@@ -12,7 +12,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   redis:
       port: 6379
-      host: 127.0.0.11
+      host: 127.0.0.1
       database: 0
       jedis:
         pool:
@@ -20,17 +20,20 @@ spring:
           max-wait: -1
           max-idle: 8
           min-idle: 0
-      timeout: 0
+      timeout: 5000
   data:
     mongodb:
-      database: test
+      database: shixuntwologback
       host: 127.0.0.1
       port: 27017
+      uri: mongodb://localhost:27017/shixuntwologback
   rabbitmq:
-    host: 127.0.0.1
+    host: 192.168.31.236
     port: 5672
-    username: guest
-    password: guest
+    username: clt
+    password: clt
     publisher-confirms: true
     virtual-host: /1710b
+logging:
+  file: ./logback.log
 

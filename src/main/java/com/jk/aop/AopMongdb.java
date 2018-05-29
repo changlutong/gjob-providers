@@ -1,21 +1,7 @@
-/**
- * Copyright (C), 2018-2018, jk有限公司
- * FileName: AopMongdb
- * Author:  常路通
- * Date:     2018/5/24 14:24
- * Description:
- * /**
- * Copyright (C), 2015-2018, XXX有限公司
- * FileName: AopMongdb
- * Author:   chang
- * Date:     2018/5/24 14:24
- * Description:
- * History:
- * <author>          <time>          <version>          <desc>
- * 作者姓名           修改时间           版本号              描述
- */
 package com.jk.aop;
 
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 import com.jk.model.Company;
 import com.jk.model.Logs;
 import com.jk.model.Tpersonal;
@@ -29,10 +15,13 @@ import org.springframework.stereotype.Component;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
- * 〈一句话功能简述〉<br> 
+ * 〈一句话功能简述〉<br>
  * 〈〉
  *
  * @author chang
@@ -76,70 +65,111 @@ public class AopMongdb {
 
    @AfterReturning( pointcut = "webLog()")
     public void doAfterReturning(JoinPoint joinPoint) throws Throwable {
-        InetAddress addr = InetAddress.getLocalHost();
-        String ip=addr.getHostAddress().toString();
-        Object ompany = redisTemplate.opsForValue().get(ip);
-        String name="";
-        if(ompany!=null){
-            Company company= (Company) ompany;
-           String comname= company.getCompanyname();
-           if(comname!=null&&!"".equals(comname)){
-               name=comname;
-           }else{
 
-               Tpersonal tpersonal= (Tpersonal) ompany;
-               if(tpersonal.getPhone()!=null&&!"".equals(tpersonal.getPhone())){
-                   name=tpersonal.getPhone();
+       ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+       cachedThreadPool.execute(new Runnable() {
+           @Override
+           public void run() {
+               InetAddress addr = null;
+               try {
+                   addr = InetAddress.getLocalHost();
+               } catch (UnknownHostException e) {
+                   e.printStackTrace();
                }
+               String ip=addr.getHostAddress().toString();
+               Object ompany = redisTemplate.opsForValue().get(ip);
+               String name="";
+               Map<String,String>map=new HashMap<>();
+               if(ompany!=null){
+
+                   String str=ompany.toString();
+                   String strs=str.substring(str.indexOf("{")+1,str.length()-1);
+                   String [] arr=  strs.split(",");
+                   System.out.println(strs);
+                   for (int i=0; i<arr.length;i++){
+                     //  map.put(arr[i].split("=")[0],arr[i].split("=")[1]);
+                       String [] arr1= arr[i].split("=");
+                       if(arr1.length>1){
+                           map.put(arr1[0],arr1[1]);
+                       }else{
+                           map.put(arr1[0],"");
+                       }
+                   }
+                   name= map.get("companyname");
+                   if(name==null||"".equals(name)){
+                       name=map.get("phone");
+                   }
+               }
+               Object[] paramValues = joinPoint.getArgs();
+               String[] paramNames = ((CodeSignature) joinPoint.getSignature()).getParameterNames();
+               String params=null;
+               for(int i=0;i<paramNames.length;i++){
+                   params+=paramNames[i]+":"+paramValues[i]+",";
+               }
+               Logs logs=new Logs();
+               logs.setDoituser(name);
+               logs.setClazzName(joinPoint.getSignature().getDeclaringTypeName().toString());
+               logs.setMethodName(joinPoint.getSignature().getName());
+               logs.setParams(params);
+               logs.setIsexception("正常");
+               mongoTemplate.insert(logs);
+               System.out.println("正常日志已储存");
+               cachedThreadPool.shutdown();
            }
-        }
-       Object[] paramValues = joinPoint.getArgs();
-       String[] paramNames = ((CodeSignature) joinPoint.getSignature()).getParameterNames();
-       String params=null;
-       for(int i=0;i<paramNames.length;i++){
-           params+=paramNames[i]+":"+paramValues[i]+",";
-       }
-        Logs logs=new Logs();
-        logs.setDoituser(name);
-        logs.setClazzName(joinPoint.getSignature().getDeclaringTypeName().toString());
-        logs.setMethodName(joinPoint.getSignature().getName());
-        logs.setParams(params);
-        mongoTemplate.insert(logs);
-        System.out.println("后置通知执行.....");
+       });
+       System.out.println("后置通知执行.....");
     }
   @AfterThrowing(pointcut = "webLog()")
     public void throwss(JoinPoint jp) throws UnknownHostException {
-      InetAddress addr = InetAddress.getLocalHost();
-        String ip=addr.getHostAddress().toString();
-        Object ompany = redisTemplate.opsForValue().get(ip);
-        String name="";
-        if(ompany!=null){
-
-            Company company= (Company) ompany;
-            String comname= company.getCompanyname();
-            if(comname!=null&&!"".equals(comname)){
-                name=comname;
-            }else{
-
-                Tpersonal tpersonal= (Tpersonal) ompany;
-                if(tpersonal.getPhone()!=null&&!"".equals(tpersonal.getPhone())){
-                    name=tpersonal.getPhone();
-                }
-            }
-        }
-      Object[] paramValues = jp.getArgs();
-      String[] paramNames = ((CodeSignature) jp.getSignature()).getParameterNames();
-      String params=null;
-      for(int i=0;i<paramNames.length;i++){
-          params+=paramNames[i]+":"+paramValues[i]+",";
+      ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
+      cachedThreadPool.execute(new Runnable() {
+          @Override
+          public void run() {
+              InetAddress addr = null;
+              try {
+                  addr = InetAddress.getLocalHost();
+              } catch (UnknownHostException e) {
+                  e.printStackTrace();
+              }
+              String ip = addr.getHostAddress().toString();
+              Object ompany = redisTemplate.opsForValue().get(ip);
+              String name = "";
+              Map<String,String>map=new HashMap<>();
+              if(ompany!=null){
+                  String str=ompany.toString();
+                  String strs=str.substring(str.indexOf("{")+1,str.length()-1);
+                  String [] arr=  strs.split(",");
+                  for (int i=0; i<arr.length;i++){
+                      String [] arr1= arr[i].split("=");
+                      if(arr1.length>1){
+                          map.put(arr1[0],arr1[1]);
+                      }else{
+                          map.put(arr1[0],"");
+                      }
+                  }
+                  name= map.get("companyname");
+                  if(name==null||"".equals(name)){
+                      name=map.get("phone");
+                  }
+              }
+              Object[] paramValues = jp.getArgs();
+              String[] paramNames = ((CodeSignature) jp.getSignature()).getParameterNames();
+              String params = null;
+              for (int i = 0; i < paramNames.length; i++) {
+                  params += paramNames[i] + ":" + paramValues[i] + ",";
+              }
+              Logs logs = new Logs();
+              logs.setDoituser(name);
+              logs.setClazzName(jp.getSignature().getDeclaringTypeName().toString());
+              logs.setMethodName(jp.getSignature().getName());
+              logs.setParams(params);
+              logs.setIsexception("异常");
+              mongoTemplate.insert(logs);
+              System.out.println("异常日志已储存");
+              cachedThreadPool.shutdown();
+          }
+      });
+          System.out.println("方法异常时执行.....");
       }
-      Logs logs=new Logs();
-      logs.setDoituser(name);
-      logs.setClazzName(jp.getSignature().getDeclaringTypeName().toString());
-      logs.setMethodName(jp.getSignature().getName());
-      logs.setParams(params);
-      logs.setIsexception("异常");
-      mongoTemplate.insert(logs);
-        System.out.println("方法异常时执行.....");
-    }
+
 }
