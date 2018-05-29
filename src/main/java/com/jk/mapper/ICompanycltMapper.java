@@ -1,6 +1,7 @@
 package com.jk.mapper;
 
 import com.jk.model.Company;
+import com.jk.model.Companyresume;
 import com.jk.model.Job;
 import org.apache.ibatis.annotations.*;
 
@@ -31,8 +32,10 @@ public interface ICompanycltMapper {
     void updatejobstatus(@Param("i")int i, @Param("ids")String ids);
     @Select(" select * from t_job where companyphone= #{companyid} and showstatus=2")
     List<Map<String,Object>> getzhiweilistfor2(String companyid);
+
     @SelectProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "selectJob")
     List<Map<String,Object>> selectjiobclt2(@Param("edu")String edu,@Param("wspa")String wspa);
+
     @SelectProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "selectalljob")
     List<Job> selectalljob(@Param("job") Job job);
     @Insert("insert into t_job_user(id,jobid,userid)values(#{uuid},#{jobid},#{userid}) ")
@@ -48,6 +51,12 @@ public interface ICompanycltMapper {
     Map<String,String> shoudaojianlixiqngqing(@Param("str")String str);
     @Delete(" delete from t_job where id=#{id} ")
     void deletejobbyid(String id);
+
+    @Update("update t_score set score=score-10 where comid= #{companyid}")
+    void updatejifenjianshao(@Param("companyid") String companyid);
+
+    @Insert("insert into t_companyresume (resumecompanyid,usergrxxid,companyid)values(#{resumecompanyid},#{usergrxxid},#{companyid})")
+    void addcompanyresume(@Param("resumecompanyid") Integer resumecompanyid,@Param("companyid") String companyid, @Param("usergrxxid") String usergrxxid );
 
 
     class JobDaoProvider {

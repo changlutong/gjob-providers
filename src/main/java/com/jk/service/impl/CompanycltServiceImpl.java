@@ -18,6 +18,7 @@ package com.jk.service.impl;
 
 import com.jk.mapper.ICompanycltMapper;
 import com.jk.model.Company;
+import com.jk.model.Companyresume;
 import com.jk.model.Job;
 import com.jk.service.ICompanycltService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,6 +156,22 @@ public class CompanycltServiceImpl implements ICompanycltService{
     public List<Job> selectjobbygongsiid(String id) {
         return companycltMapper.selectjobbygongsiid(id);
     }
+
+    @Override
+    public void addcompanyresume(Companyresume companyresume) {
+        Integer resumecompanyid = companyresume.getResumecompanyid();
+        String companyid = companyresume.getCompanyid();
+        String usergrxxid = companyresume.getUsergrxxid();
+
+        companycltMapper.addcompanyresume(resumecompanyid,companyid,usergrxxid);
+        companycltMapper.updatejifenjianshao(companyid);
+
+
+    }
+
+
+
+
 
     @Override
     public Map<String, String> shoudaojianlixiqngqing(String str) {

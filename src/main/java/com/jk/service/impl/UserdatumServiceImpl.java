@@ -4,11 +4,15 @@ import com.jk.mapper.IUserdatumMapper;
 import com.jk.model.*;
 import com.jk.service.IUserdatumService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by ASUS on 2018/5/15.
@@ -19,6 +23,10 @@ public class UserdatumServiceImpl implements IUserdatumService {
 
     @Autowired
     private IUserdatumMapper iuserdatumMapper;
+   @Autowired
+    private RedisTemplate redisTemplate;
+
+
 
     @Override
     public void userdatumgrxx(UsergDatum usergDatum) {
@@ -160,6 +168,24 @@ public class UserdatumServiceImpl implements IUserdatumService {
         return list;
     }
 
+    @Override
+    public List<Map<String, Object>> selectallwdtdxq(String companyid) {
+        List<Map<String, Object>> list = iuserdatumMapper.selectallwdtdxq(companyid);
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectzls(String zwei, String xingz, String ddian) {
+        List<Map<String, Object>> list = iuserdatumMapper.selectzls(zwei,xingz,ddian);
+        return list;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectxgzp(String companyid) {
+        List<Map<String, Object>> list = iuserdatumMapper.selectxgzp(companyid);
+        return list;
+    }
+
     /**
      * 验证码
      * @param phone
@@ -186,6 +212,25 @@ public class UserdatumServiceImpl implements IUserdatumService {
     @Override
     public List<Tpersonal> selectUserlogin(String loginname, String password) {
        List <Tpersonal> list = iuserdatumMapper.selectUserlogin(loginname,password);
+       //获取ip
+        String hostAddress = null;
+        try {
+            hostAddress = InetAddress.getLocalHost().getHostAddress();
+            //登陆成功把用户信息存到redis
+            redisTemplate.opsForValue().set(hostAddress,list.get(0));
+
+/*
+                输出
+            Company company2 = (Company)redisTemplate.opsForValue().get(hostAddress);
+            System.out.println(company2);
+*/
+
+            redisTemplate.expire(hostAddress,1800000 , TimeUnit.MILLISECONDS);//设置过期时间
+
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
         return list;
     }
 
