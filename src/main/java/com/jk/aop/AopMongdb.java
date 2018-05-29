@@ -85,7 +85,6 @@ public class AopMongdb {
                    String str=ompany.toString();
                    String strs=str.substring(str.indexOf("{")+1,str.length()-1);
                    String [] arr=  strs.split(",");
-                   System.out.println(strs);
                    for (int i=0; i<arr.length;i++){
                      //  map.put(arr[i].split("=")[0],arr[i].split("=")[1]);
                        String [] arr1= arr[i].split("=");
