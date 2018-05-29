@@ -184,7 +184,7 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
-    @CacheEvict(value="getzhiweilist",key="'getzhiweilist'+#job.companyphone")
+    @CacheEvict(value="getzhiweilist",allEntries = true)
     public void deletejobbyid(String id) {
         companycltMapper.deletejobbyid(id);
     }
