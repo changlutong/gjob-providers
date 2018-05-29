@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9999
   servlet:
     context-path: /gjob-providers
 spring:
@@ -20,12 +20,14 @@ spring:
           max-wait: -1
           max-idle: 8
           min-idle: 0
-      timeout: 0
+      timeout: 5000
   data:
     mongodb:
       database: test
       host: 127.0.0.1
       port: 27017
+    solr:
+      host: http://192.168.31.236:8091/solr/mycore
   rabbitmq:
     host: 127.0.0.1
     port: 5672
@@ -33,4 +35,3 @@ spring:
     password: guest
     publisher-confirms: true
     virtual-host: /1710b
-
