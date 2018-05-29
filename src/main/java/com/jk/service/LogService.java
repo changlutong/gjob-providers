@@ -3,7 +3,7 @@ package com.jk.service;
 import com.jk.model.Logs;
 
 
-
+import java.util.List;
 import java.util.Map;
 
 
@@ -14,6 +14,8 @@ public interface LogService {
 
     Map<String, Object> logsList( Logs logs, Integer page, Integer rows);
 
+//报表统计
+    List selecttongji();
 
 
 }
