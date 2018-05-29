@@ -37,7 +37,7 @@ public interface ICompanycltMapper {
     List<Map<String,Object>> selectjiobclt2(@Param("edu")String edu,@Param("wspa")String wspa);
 
     @SelectProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "selectJobs")
-    List<Map<String,Object>> selectjiobclt3(@Param("companyid") String usergrxxid, @Param("eduback") String eduback, @Param("workspace") String workspace);
+    List<Map<String,Object>> selectjiobclt3(@Param("companyid") String companyid, @Param("eduback") String eduback, @Param("workspace") String workspace);
 
     @SelectProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "selectalljob")
     List<Job> selectalljob(@Param("job") Job job);
