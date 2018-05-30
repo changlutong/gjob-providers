@@ -56,6 +56,8 @@ public class SolrServiceImpl implements ISolrService {
     public QueryJob getsolrjoblist(Integer page,Integer row, String queryname) throws ParseException {
         if(page==null){
             page=0;
+        }else{
+            page=(page-1)*10;
         }
         if(row==null){
             row=10;
