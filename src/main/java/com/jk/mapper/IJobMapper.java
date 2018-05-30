@@ -10,8 +10,8 @@ import java.util.List;
  */
 @Mapper
 public interface IJobMapper {
-    @Select(" select workname from t_job ")
+    @Select(" select workname from t_job where showstatus=2")
     List<String> getJobName();
-    @Select(" select worktype from t_job ")
+    @Select(" select worktype from t_job where showstatus=2")
     List<String> getJobName01();
 }

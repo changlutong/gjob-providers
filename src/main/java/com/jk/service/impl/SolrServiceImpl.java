@@ -16,6 +16,7 @@
  */
 package com.jk.service.impl;
 
+import ch.qos.logback.classic.sift.SiftAction;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import com.jk.model.Job;
 import com.jk.model.QueryJob;
@@ -27,7 +28,9 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.beans.BeanMap;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -72,6 +75,65 @@ public class SolrServiceImpl implements ISolrService {
         queryJob.setTotal(total);
         return queryJob;
     }
+
+    @Override
+    public void addjob(Job job) {
+        SolrInputDocument doc =new SolrInputDocument();
+
+    /*    while (it.hasNext()){
+            Map.Entry<String, Object> entry = it.next();
+            if (entry.getValue()!=null){
+                doc.addField(entry.getKey(), (String)entry.getValue());
+
+            }else{
+                doc.addField(entry.getKey(),"");
+            }
+        }*/
+    doc.addField("id", job.getId());
+        doc.addField("salary", job.getSalary());
+        doc.addField("createtime", job.getCreatetime());
+        doc.addField("workexp",job.getWorkexp());
+        doc.addField("worknum", job.getWorknum());
+        doc.addField("workspace",job.getWorkspace());
+        doc.addField("workpro",job.getWorkpro());
+        doc.addField("eduback",job.getEduback());
+        doc.addField("worktype",job.getWorktype());
+        doc.addField("workname",job.getWorkname());
+        doc.addField("workinfo",job.getWorkinfo());
+        doc.addField("companyinfo",job.getCompanyinfo());
+        doc.addField("companyphone",job.getCompanyphone());
+        doc.addField("companyname",job.getCompanyname());
+        try {
+            client.add(doc);
+            client.commit();
+        } catch (SolrServerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void deletejob(String ids) {
+        try {
+
+
+            client.deleteById(ids);
+            client.commit();
+
+
+        } catch (SolrServerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     private Map<String,Object> getsolrjoblisttool(Integer page, Integer row, String queryname, String ziduan) throws ParseException {
         //ModifiableSolrParams params =new ModifiableSolrParams();
         SolrQuery query = new SolrQuery();
@@ -94,8 +156,10 @@ public class SolrServiceImpl implements ISolrService {
         //每页几条
        // params.add("rows",row+"");
         query.setStart(page);
+
         //每页几条
         query.setRows(row);
+        query.setFilterQueries("showstatus:2");
         query.setSort("createtime", SolrQuery.ORDER.desc);
         QueryResponse queryResponse = null;
         try {
@@ -134,6 +198,7 @@ public class SolrServiceImpl implements ISolrService {
             job.setWorkinfo(solrDocument.get("workinfo").toString());
             job.setCompanyinfo(solrDocument.get("companyinfo").toString());
             job.setCompanyphone(solrDocument.get("companyphone").toString());
+
             list.add(job);
         }
 

@@ -36,6 +36,9 @@ public interface ICompanycltMapper {
     @SelectProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "selectJob")
     List<Map<String,Object>> selectjiobclt2(@Param("edu")String edu,@Param("wspa")String wspa);
 
+    @SelectProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "selectJobs")
+    List<Map<String,Object>> selectjiobclt3(@Param("companyid") String companyid, @Param("eduback") String eduback, @Param("workspace") String workspace);
+
     @SelectProvider(type = ICompanycltMapper.JobDaoProvider.class, method = "selectalljob")
     List<Job> selectalljob(@Param("job") Job job);
     @Insert("insert into t_job_user(id,jobid,userid)values(#{uuid},#{jobid},#{userid}) ")
@@ -52,11 +55,15 @@ public interface ICompanycltMapper {
     @Delete(" delete from t_job where id=#{id} ")
     void deletejobbyid(String id);
 
-    @Update("update t_score set score=score-10 where comid= #{companyid}")
+    @Update("update t_score set score=score-10 ,addscore=addscore+10 where comid= #{companyid}")
     void updatejifenjianshao(@Param("companyid") String companyid);
 
     @Insert("insert into t_companyresume (resumecompanyid,usergrxxid,companyid)values(#{resumecompanyid},#{usergrxxid},#{companyid})")
     void addcompanyresume(@Param("resumecompanyid") Integer resumecompanyid,@Param("companyid") String companyid, @Param("usergrxxid") String usergrxxid );
+    //查有没有购买过简历
+    @Select("select * from  t_companyresume where companyid=#{companyid} and usergrxxid =#{usergrxxid}")
+    List<Companyresume> querycompanyresume(@Param("companyid") String companyid,@Param("usergrxxid") String usergrxxid);
+
 
 
     class JobDaoProvider {
@@ -131,6 +138,21 @@ public interface ICompanycltMapper {
             }
             return sql;
         }
+        public String selectJobs(@Param("companyid") String companyid, @Param("eduback") String eduback, @Param("workspace") String workspace){
+            String sql = "select t1.usergrxxid,t1.grxxname,t1.sex,t1.phone,t1.email,t1.hkadr,t1.birthdate,t2.jybjxl from t_grxx t1,t_jybj t2 ,t_companyresume t3 where t1.usergrxxid=t2.jybjid and t1.usergrxxid= t3.usergrxxid and t3.companyid=#{companyid}";
+            if(eduback!=null&&!"".equals(eduback)){
+                sql+=" and t2.jybjxl like '%"+eduback+"%'";
+            }
+            if(workspace!=null&&!"".equals(workspace)){
+                sql+=" and t1.hkadr like '%"+workspace+"%'";
+            }
+            return sql;
+        }
+
+
+
+
+
         public String selectalljob(@Param("job")Job job){
 
             String sql ="select * from t_job where showstatus=2";
