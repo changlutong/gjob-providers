@@ -196,7 +196,7 @@ public class SolrServiceImpl implements ISolrService {
             job.setWorktype(solrDocument.get("worktype").toString());
             job.setWorkname(solrDocument.get("workname").toString());
             job.setWorkinfo(solrDocument.get("workinfo").toString());
-            job.setCompanyinfo(solrDocument.get("companyinfo").toString());
+
             job.setCompanyphone(solrDocument.get("companyphone").toString());
 
             list.add(job);
