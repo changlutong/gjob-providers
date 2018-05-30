@@ -119,6 +119,14 @@ public interface ICompanycltMapper {
                 sql1.append("workpro,");
                 sql2.append("#{workpro},");
             }
+            if (job.getCompanyinfo() != null && !"".equals(job.getCompanyinfo())) {
+                sql1.append("companyinfo,");
+                sql2.append("#{companyinfo},");
+            }
+            if (job.getCompanyname() != null && !"".equals(job.getCompanyname())) {
+                sql1.append("companyname,");
+                sql2.append("#{companyname},");
+            }
             if (job.getShowstatus() != null) {
                 sql1.append("showstatus,");
                 sql2.append("#{showstatus},");
