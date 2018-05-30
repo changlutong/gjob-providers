@@ -170,8 +170,25 @@ public class CompanycltServiceImpl implements ICompanycltService{
 
     }
 
+    @Override
+    public String querycompanyresume(String companyid, String usergrxxid) {
+        List<Companyresume> querycompanyresume = companycltMapper.querycompanyresume(companyid, usergrxxid);
+        if(querycompanyresume !=null && querycompanyresume.size()>0){
+                      return "2";
+        }
+        return "1";
+    }
+
+    @Override
+    public List<Map<String, Object>> selectjiobclt3(String companyid, Job job) {
+        String eduback = job.getEduback();
+        String workspace = job.getWorkspace();
+
+        List<Map<String, Object>> list=companycltMapper.selectjiobclt3(companyid,eduback,workspace);
+        return list;
 
 
+    }
 
 
     @Override
