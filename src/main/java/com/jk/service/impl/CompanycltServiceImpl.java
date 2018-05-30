@@ -21,12 +21,18 @@ import com.jk.model.Company;
 import com.jk.model.Companyresume;
 import com.jk.model.Job;
 import com.jk.service.ICompanycltService;
+import com.jk.service.ISolrService;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cglib.beans.BeanMap;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -41,6 +47,10 @@ import java.util.*;
 public class CompanycltServiceImpl implements ICompanycltService{
     @Autowired
     private  ICompanycltMapper companycltMapper;
+    @Autowired
+    private ISolrService solrService;
+
+
 
     @Override
     public List<Map<String, Object>> getjlinfo(String companyid) {
@@ -73,6 +83,7 @@ public class CompanycltServiceImpl implements ICompanycltService{
         job.setCreatetime(new Date());
         job.setSalary(job.getSalary().replace(",","-"));
         job.setShowstatus(1);
+        solrService.addjob(job);
         companycltMapper.addzhiwei(job);
     }
     public List<Map<String,Object>> getzhiweilist(String companyid){
@@ -200,6 +211,7 @@ public class CompanycltServiceImpl implements ICompanycltService{
     @Override
     public void deletejobbyid(String id) {
         companycltMapper.deletejobbyid(id);
+        solrService.deletejob(id);
     }
 
 
