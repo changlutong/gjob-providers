@@ -42,7 +42,17 @@ public class Job implements Serializable{
     private String workinfo;
     private String companyinfo;
     private String companyphone;
+
     private Integer showstatus;
+    private String companyname;
+
+    public String getCompanyname() {
+        return companyname;
+    }
+
+    public void setCompanyname(String companyname) {
+        this.companyname = companyname;
+    }
 
 
     public Integer getShowstatus() {
