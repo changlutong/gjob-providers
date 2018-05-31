@@ -222,7 +222,7 @@ public interface IUserdatumMapper {
     List<Tpersonal> selectUserlogin(@Param("loginname")String loginname, @Param("password")String password);
 
     /**
-     *查询 当前用户收投递的 职业
+     *查询 当前用户所投递的 职业
      *
      */
 
@@ -232,8 +232,8 @@ public interface IUserdatumMapper {
     /**
      *查询 当前用户所投递的 职业 详情
      */
-    @Select("select t2.id,t2.workname,t2.workpro,t2.salary,t2.worknum,t2.eduback,t2.workexp,t2.workspace,t2.companyphone,t2.workinfo from t_job_user t1,t_job t2 where t1.jobid = t2.id and t1.userid = #{companyid}")
-    List<Map<String,Object>> selectallwdtdxq(@Param("companyid")String companyid);
+    @Select("select * from  t_job_user t1,t_job t2 where t1.userid = #{userid} and t1.jobid = #{companyid} and t1.jobid = t2.id")
+    List<Map<String,Object>> selectJobDetails(@Param("companyid")String companyid,@Param("userid")String userid);
 
     /**
      * 当前用户所投递的 职业 的相关推荐 详情
