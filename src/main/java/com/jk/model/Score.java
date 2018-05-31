@@ -29,15 +29,7 @@ public class Score implements Serializable {
     private Integer jid;//逐渐
     private Long score;//积分余额
     private String comid;//公司ID
-
-    @Override
-    public String toString() {
-        return "Score{" +
-                "jid=" + jid +
-                ", score=" + score +
-                ", comid='" + comid + '\'' +
-                '}';
-    }
+    private Integer addscore;//使用积分钱数
 
     public Integer getJid() {
         return jid;
@@ -61,5 +53,23 @@ public class Score implements Serializable {
 
     public void setComid(String comid) {
         this.comid = comid;
+    }
+
+    public Integer getAddscore() {
+        return addscore;
+    }
+
+    public void setAddscore(Integer addscore) {
+        this.addscore = addscore;
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "jid=" + jid +
+                ", score=" + score +
+                ", comid='" + comid + '\'' +
+                ", addscore=" + addscore +
+                '}';
     }
 }

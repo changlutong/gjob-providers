@@ -10,10 +10,7 @@
  */
 package com.jk.mapper;
 
-import com.jk.model.BankType;
-import com.jk.model.CompanyCard;
-import com.jk.model.Score;
-import com.jk.model.Tree;
+import com.jk.model.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -72,4 +69,19 @@ public interface IBankTypeMapper {
 
     @Update("update t_comcard set money=(money-#{aLong}) where cardid=#{valll}")
     void updatebankcard(@Param("aLong") Long aLong,@Param("valll") String valll);
+
+    @Update("update t_score set score=(score-#{l}) where comid=#{comid}")
+    void updatejifendown(@Param("comid") String comid,@Param("l") long l);
+
+    @Select("select score from t_score where comid=#{comid}")
+    long querycomyue(@Param("comid") String comid);
+
+    @Select("select * from finance where dates=#{sdfformat}")
+    Finance querytongjibiao(@Param("sdfformat") String sdfformat);
+
+    @Insert("insert into finance(dates,financetotal) values(#{sdfformat},#{jine})")
+    void addtongjibiao(@Param("sdfformat") String sdfformat,@Param("jine") Integer jine);
+
+    @Update("update finance set financetotal=(financetotal+#{jine}) where dates=#{sdfformat}")
+    void updatetongjibiao(@Param("sdfformat") String sdfformat, @Param("jine") Integer jine);
 }

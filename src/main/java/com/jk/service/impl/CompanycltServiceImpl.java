@@ -22,18 +22,14 @@ import com.jk.model.Companyresume;
 import com.jk.model.Job;
 import com.jk.service.ICompanycltService;
 import com.jk.service.ISolrService;
-import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cglib.beans.BeanMap;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
+
+import static com.jk.util.EmailUtil.sendHtmlMail;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -77,7 +73,6 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
-    @CacheEvict(value = "getzhiweilist",key = "getzhiweilist+#job.companyphone")
     public void addzhiwei(Job job) {
 
         job.setId(UUID.randomUUID().toString().replace("-",""));
@@ -87,15 +82,11 @@ public class CompanycltServiceImpl implements ICompanycltService{
         solrService.addjob(job);
         companycltMapper.addzhiwei(job);
     }
+    public List<Map<String,Object>> getzhiweilist(String companyid){
+        List<Map<String,Object>>list=  companycltMapper.getzhiweilist(companyid);
 
-    @Override
-    @Cacheable(value = "getzhiweilist",key = "getzhiweilist+#companyid")
-    public List<Map<String, Object>> getzhiweilist(String companyid) {
-            List<Map<String,Object>>list=  companycltMapper.getzhiweilist(companyid);
-            return list;
-
+        return list;
     }
-
 
     @Override
     public  Map<String, Object> selectjobbyid(String str) {
@@ -157,11 +148,11 @@ public class CompanycltServiceImpl implements ICompanycltService{
         String [] arr ={"t_company","t_company13","t_company15","t_company17"};
         Company company=null;
         for (String biaoid: arr) {
-          company = companycltMapper.selectcompanybyid(biaoid,gongsiid);
+            company = companycltMapper.selectcompanybyid(biaoid,gongsiid);
 
             if(company!=null){
 
-               break;
+                break;
 
             }
 
@@ -190,7 +181,7 @@ public class CompanycltServiceImpl implements ICompanycltService{
     public String querycompanyresume(String companyid, String usergrxxid) {
         List<Companyresume> querycompanyresume = companycltMapper.querycompanyresume(companyid, usergrxxid);
         if(querycompanyresume !=null && querycompanyresume.size()>0){
-                      return "2";
+            return "2";
         }
         return "1";
     }
@@ -207,6 +198,7 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
 
+
     @Override
     public Map<String, String> shoudaojianlixiqngqing(String str) {
         Map<String, String>map= companycltMapper.shoudaojianlixiqngqing(str);
@@ -214,11 +206,17 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
-    @CacheEvict(value = "getzhiweilist",key = "getzhiweilist+#job.companyphone")
     public void deletejobbyid(String id) {
         companycltMapper.deletejobbyid(id);
         solrService.deletejob(id);
     }
 
+    @Override
+    public void companyemaliz(String email,String grxxname) throws UnsupportedEncodingException, MessagingException {
+
+        sendHtmlMail(email,"面试邀请函",""+grxxname+",你好,您的简历比较符合我公司企业的要求，特邀请您明天下午3：00到本公司参加面试，");
+
+
+    }
 
 }
