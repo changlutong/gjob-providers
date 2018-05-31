@@ -77,8 +77,8 @@ public class BankTypeServiceImpl implements BankTypeService {
     }
 
     @Override
-    public List<CompanyCard> querybankcard() {
-        return bankTypeMapper.querybankcard();
+    public List<CompanyCard> querybankcard(String comid) {
+        return bankTypeMapper.querybankcard(comid);
     }
 
     @Override

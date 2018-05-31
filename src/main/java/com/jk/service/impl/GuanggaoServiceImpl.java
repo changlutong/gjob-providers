@@ -70,9 +70,12 @@ public class GuanggaoServiceImpl implements IGuanggaoService {
 
         //先查询余额
         String comid = guanggao.getCompanyid();
-        long yue = bankTypeMapper.querycomyue(comid);
+        Integer yue = bankTypeMapper.querycomyue(comid);
+        if(yue == null ){
+            yue=0;
+        }
         String price = guanggao.getPrice();
-        if(Long.parseLong(price) > yue){
+        if(Long.parseLong(price) > Long.parseLong(String.valueOf(yue))){
             map.put("money","success");
         }else {
             guanggaoMapper.saveguanggao(guanggao);

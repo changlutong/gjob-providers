@@ -46,8 +46,8 @@ public interface IBankTypeMapper {
     @Insert("insert into t_comcard (comid,cardnum,cardname,cardid,money) values(#{companyCard.comid},#{companyCard.cardnum},#{companyCard.cardname},#{companyCard.cardid},#{companyCard.money})")
     void savebankcard(@Param("companyCard") CompanyCard companyCard);
 
-    @Select("select t1.*,t2.imageurl as bankimg,t2.bankname as bankcardname from t_comcard t1,t_banktype t2 where t1.cardid = t2.id")
-    List<CompanyCard> querybankcard();
+    @Select("select t1.*,t2.imageurl as bankimg,t2.bankname as bankcardname from t_comcard t1,t_banktype t2 where t1.cardid = t2.id and t1.comid=#{comid}")
+    List<CompanyCard> querybankcard(@Param("comid") String comid);
 
     @Select("select * from t_comcard where cid=#{cid}")
     CompanyCard queryBankCardById(@Param("cid") Integer cid);
@@ -74,7 +74,7 @@ public interface IBankTypeMapper {
     void updatejifendown(@Param("comid") String comid,@Param("l") long l);
 
     @Select("select score from t_score where comid=#{comid}")
-    long querycomyue(@Param("comid") String comid);
+    Integer querycomyue(@Param("comid") String comid);
 
     @Select("select * from finance where dates=#{sdfformat}")
     Finance querytongjibiao(@Param("sdfformat") String sdfformat);
