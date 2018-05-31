@@ -22,18 +22,14 @@ import com.jk.model.Companyresume;
 import com.jk.model.Job;
 import com.jk.service.ICompanycltService;
 import com.jk.service.ISolrService;
-import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cglib.beans.BeanMap;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
+
+import static com.jk.util.EmailUtil.sendHtmlMail;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -202,6 +198,7 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
 
+
     @Override
     public Map<String, String> shoudaojianlixiqngqing(String str) {
         Map<String, String>map= companycltMapper.shoudaojianlixiqngqing(str);
@@ -214,5 +211,12 @@ public class CompanycltServiceImpl implements ICompanycltService{
         solrService.deletejob(id);
     }
 
+    @Override
+    public void companyemaliz(String email,String grxxname) throws UnsupportedEncodingException, MessagingException {
+
+        sendHtmlMail(email,"面试邀请函",""+grxxname+",你好,您的简历比较符合我公司企业的要求，特邀请您明天下午3：00到本公司参加面试，");
+
+
+    }
 
 }

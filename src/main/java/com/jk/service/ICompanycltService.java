@@ -4,6 +4,8 @@ import com.jk.model.Company;
 import com.jk.model.Companyresume;
 import com.jk.model.Job;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -42,5 +44,7 @@ public interface ICompanycltService {
     String querycompanyresume(String companyid,String usergrxxid);
 
     List<Map<String,Object>> selectjiobclt3(String companyid, Job job);
+
+    void companyemaliz(String email,String grxxname)throws UnsupportedEncodingException, MessagingException;
 
 }

@@ -65,7 +65,6 @@ public interface ICompanycltMapper {
     List<Companyresume> querycompanyresume(@Param("companyid") String companyid,@Param("usergrxxid") String usergrxxid);
 
 
-
     class JobDaoProvider {
         public String insertJobById(Job job) {
             String sql = "insert into t_job(";
