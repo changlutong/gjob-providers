@@ -12,7 +12,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   redis:
       port: 6379
-      host: 127.0.0.01
+      host: 127.0.0.1
       database: 0
       jedis:
         pool:
@@ -26,6 +26,8 @@ spring:
       database: test
       host: 127.0.0.1
       port: 27017
+    solr:
+      host: http://192.168.31.236:8091/solr/mycore
   rabbitmq:
     host: 127.0.0.1
     port: 5672
@@ -33,4 +35,6 @@ spring:
     password: guest
     publisher-confirms: true
     virtual-host: /1710b
+logging:
+  file: ./logback.log
 

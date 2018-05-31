@@ -38,4 +38,9 @@ public interface ICompanycltService {
     void deletejobbyid(String id);
 
     void addcompanyresume(Companyresume companyresume);
+
+    String querycompanyresume(String companyid,String usergrxxid);
+
+    List<Map<String,Object>> selectjiobclt3(String companyid, Job job);
+
 }

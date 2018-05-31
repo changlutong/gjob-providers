@@ -21,11 +21,18 @@ import com.jk.model.Company;
 import com.jk.model.Companyresume;
 import com.jk.model.Job;
 import com.jk.service.ICompanycltService;
+import com.jk.service.ISolrService;
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cglib.beans.BeanMap;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -40,6 +47,10 @@ import java.util.*;
 public class CompanycltServiceImpl implements ICompanycltService{
     @Autowired
     private  ICompanycltMapper companycltMapper;
+    @Autowired
+    private ISolrService solrService;
+
+
 
     @Override
     public List<Map<String, Object>> getjlinfo(String companyid) {
@@ -66,19 +77,25 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
+    @CacheEvict(value = "getzhiweilist",key = "getzhiweilist+#job.companyphone")
     public void addzhiwei(Job job) {
 
         job.setId(UUID.randomUUID().toString().replace("-",""));
         job.setCreatetime(new Date());
         job.setSalary(job.getSalary().replace(",","-"));
         job.setShowstatus(1);
+        solrService.addjob(job);
         companycltMapper.addzhiwei(job);
     }
-    public List<Map<String,Object>> getzhiweilist(String companyid){
-        List<Map<String,Object>>list=  companycltMapper.getzhiweilist(companyid);
 
-        return list;
+    @Override
+    @Cacheable(value = "getzhiweilist",key = "getzhiweilist+#companyid")
+    public List<Map<String, Object>> getzhiweilist(String companyid) {
+            List<Map<String,Object>>list=  companycltMapper.getzhiweilist(companyid);
+            return list;
+
     }
+
 
     @Override
     public  Map<String, Object> selectjobbyid(String str) {
@@ -169,8 +186,25 @@ public class CompanycltServiceImpl implements ICompanycltService{
 
     }
 
+    @Override
+    public String querycompanyresume(String companyid, String usergrxxid) {
+        List<Companyresume> querycompanyresume = companycltMapper.querycompanyresume(companyid, usergrxxid);
+        if(querycompanyresume !=null && querycompanyresume.size()>0){
+                      return "2";
+        }
+        return "1";
+    }
+
+    @Override
+    public List<Map<String, Object>> selectjiobclt3(String companyid, Job job) {
+        String eduback = job.getEduback();
+        String workspace = job.getWorkspace();
+
+        List<Map<String, Object>> list=companycltMapper.selectjiobclt3(companyid,eduback,workspace);
+        return list;
 
 
+    }
 
 
     @Override
@@ -180,8 +214,10 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
+    @CacheEvict(value = "getzhiweilist",key = "getzhiweilist+#job.companyphone")
     public void deletejobbyid(String id) {
         companycltMapper.deletejobbyid(id);
+        solrService.deletejob(id);
     }
 
 
