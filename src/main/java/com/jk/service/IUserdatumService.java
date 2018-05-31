@@ -59,7 +59,7 @@ public interface IUserdatumService {
 
     List<Map<String,Object>> selectalljobto(String userid);
 
-    List<Map<String,Object>> selectallwdtdxq(String companyid,String userid);
+    List<Map<String,Object>> selectJobDetails(String companyid, String userid);
 
     List<Map<String,Object>> selectzls(String zwei, String xingz, String ddian);
 

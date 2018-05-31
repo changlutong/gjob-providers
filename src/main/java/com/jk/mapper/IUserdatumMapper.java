@@ -233,7 +233,7 @@ public interface IUserdatumMapper {
      *查询 当前用户所投递的 职业 详情
      */
     @Select("select * from  t_job_user t1,t_job t2 where t1.userid = #{userid} and t1.jobid = #{companyid} and t1.jobid = t2.id")
-    List<Map<String,Object>> selectallwdtdxq(@Param("companyid")String companyid,@Param("userid")String userid);
+    List<Map<String,Object>> selectJobDetails(@Param("companyid")String companyid,@Param("userid")String userid);
 
     /**
      * 当前用户所投递的 职业 的相关推荐 详情
