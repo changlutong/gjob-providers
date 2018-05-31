@@ -40,7 +40,7 @@
 	<dubbo:service interface="com.jk.service.IUserdatumService" ref="iUserdatum"></dubbo:service>
 	<dubbo:service interface="com.jk.service.LogService" ref="logService"></dubbo:service>
 	<dubbo:service interface="com.jk.service.FinanceService" ref="financeService"></dubbo:service>
+
 	<dubbo:service interface="com.jk.service.IJobService" ref="jobService"></dubbo:service>
 	<dubbo:service interface="com.jk.service.ISolrService" ref="solrService"></dubbo:service>
- </beans>
-
+</beans>
