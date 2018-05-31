@@ -59,7 +59,8 @@ public class LogServiceImpl implements LogService{
         long countz =mongoTemplate.count(query ,Logs.class);
         //初始化一个方法
         String methodName ="methodName";
-        query.addCriteria(Criteria.where(methodName).regex(".*?\\出现异常.*"));
+        String isexception ="isexception";
+        query.addCriteria(Criteria.where(isexception).regex(".*?异常.*"));
         query1.addCriteria(Criteria.where(methodName).regex("add.*"));
         query2.addCriteria(Criteria.where(methodName).regex("delete.*"));
         query3.addCriteria(Criteria.where(methodName).regex("update.*"));
