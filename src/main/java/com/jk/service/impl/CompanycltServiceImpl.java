@@ -77,7 +77,6 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
-    @CacheEvict(value = "getzhiweilist",key = "getzhiweilist+#job.companyphone")
     public void addzhiwei(Job job) {
 
         job.setId(UUID.randomUUID().toString().replace("-",""));
@@ -87,15 +86,11 @@ public class CompanycltServiceImpl implements ICompanycltService{
         solrService.addjob(job);
         companycltMapper.addzhiwei(job);
     }
+    public List<Map<String,Object>> getzhiweilist(String companyid){
+        List<Map<String,Object>>list=  companycltMapper.getzhiweilist(companyid);
 
-    @Override
-    @Cacheable(value = "getzhiweilist",key = "getzhiweilist+#companyid")
-    public List<Map<String, Object>> getzhiweilist(String companyid) {
-            List<Map<String,Object>>list=  companycltMapper.getzhiweilist(companyid);
-            return list;
-
+        return list;
     }
-
 
     @Override
     public  Map<String, Object> selectjobbyid(String str) {
@@ -157,11 +152,11 @@ public class CompanycltServiceImpl implements ICompanycltService{
         String [] arr ={"t_company","t_company13","t_company15","t_company17"};
         Company company=null;
         for (String biaoid: arr) {
-          company = companycltMapper.selectcompanybyid(biaoid,gongsiid);
+            company = companycltMapper.selectcompanybyid(biaoid,gongsiid);
 
             if(company!=null){
 
-               break;
+                break;
 
             }
 
@@ -190,7 +185,7 @@ public class CompanycltServiceImpl implements ICompanycltService{
     public String querycompanyresume(String companyid, String usergrxxid) {
         List<Companyresume> querycompanyresume = companycltMapper.querycompanyresume(companyid, usergrxxid);
         if(querycompanyresume !=null && querycompanyresume.size()>0){
-                      return "2";
+            return "2";
         }
         return "1";
     }
@@ -214,7 +209,6 @@ public class CompanycltServiceImpl implements ICompanycltService{
     }
 
     @Override
-    @CacheEvict(value = "getzhiweilist",key = "getzhiweilist+#job.companyphone")
     public void deletejobbyid(String id) {
         companycltMapper.deletejobbyid(id);
         solrService.deletejob(id);

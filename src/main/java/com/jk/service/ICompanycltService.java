@@ -34,13 +34,19 @@ public interface ICompanycltService {
     Company selectcompanybyid(String gongsiid);
 
     List<Job> selectjobbygongsiid(String id);
-    Map<String,String> shoudaojianlixiqngqing(String str);
-    void deletejobbyid(String id);
+
+
+
 
     void addcompanyresume(Companyresume companyresume);
+
+    Map<String,String> shoudaojianlixiqngqing(String str);
+
+    void deletejobbyid(String  id);
 
     String querycompanyresume(String companyid,String usergrxxid);
 
     List<Map<String,Object>> selectjiobclt3(String companyid, Job job);
 
 }
+
