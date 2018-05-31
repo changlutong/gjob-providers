@@ -169,8 +169,8 @@ public class UserdatumServiceImpl implements IUserdatumService {
     }
 
     @Override
-    public List<Map<String, Object>> selectallwdtdxq(String companyid) {
-        List<Map<String, Object>> list = iuserdatumMapper.selectallwdtdxq(companyid);
+    public List<Map<String, Object>> selectallwdtdxq(String companyid,String userid) {
+        List<Map<String, Object>> list = iuserdatumMapper.selectallwdtdxq(companyid,userid);
         return list;
     }
 
