@@ -56,6 +56,8 @@ public class SolrServiceImpl implements ISolrService {
     public QueryJob getsolrjoblist(Integer page,Integer row, String queryname) throws ParseException {
         if(page==null){
             page=0;
+        }else{
+            page=(page-1)*10;
         }
         if(row==null){
             row=10;
@@ -140,26 +142,25 @@ public class SolrServiceImpl implements ISolrService {
         if (!StringUtils.isEmpty(queryname)) {
             if("workname".equals(ziduan)) {
               //  params.set("q", "workname:" + queryname);
-                query.set("q", "workname:" + queryname);
+                query.setQuery("workname:" + queryname+" AND showstatus:2");
                // params.add("q","workname:*"+queryname+"*");
             }else{
                // params.set("q", "worktype:" + queryname);
-                query.set("q", "worktype:" + queryname);
+                query.setQuery("worktype:" + queryname+" AND showstatus:2");
                // params.add("q","workname:*"+queryname+"*");
             }
         } else {
             //params.set("q", "*:*");
-            query.set("q", "*:*");
+            query.setQuery("showstatus:2");
         }
        // params.add("start",page+"");
-
         //每页几条
        // params.add("rows",row+"");
         query.setStart(page);
 
         //每页几条
         query.setRows(row);
-        query.setFilterQueries("showstatus:2");
+
         query.setSort("createtime", SolrQuery.ORDER.desc);
         QueryResponse queryResponse = null;
         try {

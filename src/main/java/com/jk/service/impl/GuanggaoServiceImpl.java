@@ -10,16 +10,17 @@
  */
 package com.jk.service.impl;
 
+import com.jk.mapper.IBankTypeMapper;
 import com.jk.mapper.IGuanggaoMapper;
 import com.jk.model.Company;
+import com.jk.model.Finance;
 import com.jk.model.Guanggao;
 import com.jk.service.IGuanggaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -34,6 +35,10 @@ public class GuanggaoServiceImpl implements IGuanggaoService {
 
     @Autowired
     private IGuanggaoMapper guanggaoMapper;
+
+    //自动注入
+    @Autowired
+    private IBankTypeMapper bankTypeMapper;
 
 
 
@@ -54,12 +59,40 @@ public class GuanggaoServiceImpl implements IGuanggaoService {
     }
 
     @Override
-    public void saveguanggao(Guanggao guanggao) {
+    public Map<String ,Object> saveguanggao(Guanggao guanggao) {
+        Map<String ,Object> map = new HashMap<String ,Object>();
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
         guanggao.setId(uuid);
         guanggao.setStatus("1");//1是未审核  2是已审核
-        guanggaoMapper.saveguanggao(guanggao);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
+        //积分扣款
+
+        //先查询余额
+        String comid = guanggao.getCompanyid();
+        long yue = bankTypeMapper.querycomyue(comid);
+        String price = guanggao.getPrice();
+        if(Long.parseLong(price) > yue){
+            map.put("money","success");
+        }else {
+            guanggaoMapper.saveguanggao(guanggao);
+            bankTypeMapper.updatejifendown(comid, Long.parseLong(price));
+            map.put("money","fail");
+            //将数据添加到统计表中
+            //获取当前时间
+            Date date = new Date();
+            //获取消费金额
+            String jine = guanggao.getPrice();
+            String sdfformat = sdf.format(date);
+            Finance finace = bankTypeMapper.querytongjibiao(sdfformat);
+            if(finace == null){
+                bankTypeMapper.addtongjibiao(sdfformat,Integer.valueOf(jine));
+            }else {
+                bankTypeMapper.updatetongjibiao(sdfformat,Integer.valueOf(jine));
+            }
+        }
+
+        return map;
     }
 
     @Override
