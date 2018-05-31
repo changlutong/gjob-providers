@@ -136,7 +136,7 @@ public interface ICompanycltMapper {
             String sqlend=sql+sqlstr+sqlstr1+")";
             return sqlend;
         }
-      public String selectJob(@Param("edu")String edu,@Param("wspa")String wspa){
+        public String selectJob(@Param("edu")String edu,@Param("wspa")String wspa){
             String sql = "select t1.usergrxxid,t1.grxxname,t1.sex,t1.phone,t1.email,t1.hkadr,t1.birthdate,t2.jybjxl from t_grxx t1,t_jybj t2 where t1.usergrxxid=t2.jybjid";
             if(edu!=null&&!"".equals(edu)){
                 sql+=" and t2.jybjxl like '%"+edu+"%'";
@@ -167,7 +167,7 @@ public interface ICompanycltMapper {
             if(job.getWorkname()!=null&&!"".equals(job.getWorkname())){
                 sql+=" and workname like '%"+job.getWorkname()+"%'";
             }
-          return sql;
+            return sql;
         }
     }
 }
